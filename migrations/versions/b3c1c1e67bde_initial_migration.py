@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: 2584607aee9c
+Revision ID: b3c1c1e67bde
 Revises: 
-Create Date: 2023-04-25 10:36:13.614409
+Create Date: 2023-04-25 12:00:40.924187
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2584607aee9c'
+revision = 'b3c1c1e67bde'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -51,12 +51,11 @@ def upgrade():
     sa.Column('is_regular', sa.Boolean(), nullable=False),
     sa.Column('regular_invoice_date', sa.DateTime(), nullable=True),
     sa.Column('template_preview', sa.LargeBinary(), nullable=True),
-    sa.Column('currency', sa.Enum('Empty', 'Admin', 'Director', 'Manager', name='role'), nullable=True),
+    sa.Column('currency', sa.Enum('USD', 'EUR', 'UAH', name='currency'), nullable=True),
     sa.Column('buyer_id', sa.BigInteger(), nullable=False),
     sa.Column('seller_id', sa.BigInteger(), nullable=False),
     sa.Column('type', sa.Enum('Current', 'Template', 'Archived', name='invoicetype'), nullable=False),
-    sa.Column('approval_status', sa.Enum('Missing', 'Approved', 'Pending', 'RequiresUpdates', name='approvalstatus'), nullable=False),
-    sa.Column('payment_status', sa.String(), nullable=False),
+    sa.Column('approval_status', sa.Enum('NotSet', 'Approved', 'Pending', 'RequiresUpdates', name='approvalstatus'), nullable=False),
     sa.Column('id', sa.BigInteger(), nullable=False),
     sa.ForeignKeyConstraint(['buyer_id'], ['companies.id'], ),
     sa.ForeignKeyConstraint(['seller_id'], ['companies.id'], ),
@@ -66,7 +65,7 @@ def upgrade():
     sa.Column('invoice_id', sa.BigInteger(), nullable=False),
     sa.Column('payment_method_id', sa.BigInteger(), nullable=False),
     sa.Column('status', sa.Enum('Unpaid', 'Pending', 'Scheduled', 'InProgress', 'Paid', 'Cancelled', name='billstatus'), nullable=False),
-    sa.Column('approval_status', sa.Enum('Missing', 'Approved', 'Pending', 'RequiresUpdates', name='approvalstatus'), nullable=False),
+    sa.Column('approval_status', sa.Enum('NotSet', 'Approved', 'Pending', 'RequiresUpdates', name='approvalstatus'), nullable=False),
     sa.Column('bill_cancellation_id', sa.BigInteger(), nullable=True),
     sa.Column('id', sa.BigInteger(), nullable=False),
     sa.ForeignKeyConstraint(['bill_cancellation_id'], ['bill_cancellations.id'], ),

@@ -13,3 +13,10 @@ class InvoiceItem(Model, SurrogatePK):
     subtotal = Column(db.Numeric(precision=10, scale=2), nullable=False)
     invoice_id = reference_col('invoices')
     invoice = db.relationship('Invoice', back_populates='items')
+
+    def __init__(self, description, metric, count, price, subtotal):
+        self.description = description
+        self.metric = metric
+        self.count = count
+        self.price = price
+        self.subtotal = subtotal

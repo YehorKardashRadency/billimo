@@ -1,5 +1,5 @@
 from app.database import Column, Model, SurrogatePK, db
-from app.models.invoice import Invoice
+from app.models import Invoice
 
 
 class Company(Model, SurrogatePK):
@@ -12,3 +12,7 @@ class Company(Model, SurrogatePK):
     invoices_as_seller = db.relationship('Invoice', back_populates='seller', foreign_keys=[Invoice.seller_id])
 
     bill_cancellations = db.relationship('BillCancellation', back_populates='company')
+
+    def __init__(self,name,ref_id):
+        self.name = name
+        self.ref_id = ref_id

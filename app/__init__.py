@@ -16,7 +16,9 @@ def create_app():
     from .example import example_bp
     from .middlewares import middleware_bp
     from .errors import errors_bp
+    from .commands import command_bp
     app.register_blueprint(middleware_bp)
     app.register_blueprint(example_bp)
     app.register_blueprint(errors_bp)
+    app.register_blueprint(command_bp)
     return app

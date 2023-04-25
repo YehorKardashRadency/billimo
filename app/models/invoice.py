@@ -1,8 +1,14 @@
+from datetime import datetime
+from typing import List
+
 from sqlalchemy import Enum
 from app.database import Column, Model, SurrogatePK, db, reference_col
-from app.models.enums import ApprovalStatus
+from app.models import InvoiceItem
+from app.models.enums import ApprovalStatus, Currency
 from app.models.enums import InvoiceType
-from app.models.enums import Role
+
+
+
 
 
 class Invoice(Model, SurrogatePK):
@@ -17,7 +23,7 @@ class Invoice(Model, SurrogatePK):
     regular_invoice_date = Column(db.DateTime)
     template_preview = Column(db.LargeBinary)
 
-    currency = Column(Enum(Role))
+    currency = Column(Enum(Currency))
 
     buyer_id = reference_col('companies')
     buyer = db.relationship('Company', back_populates='invoices_as_buyer', foreign_keys=[buyer_id])
@@ -27,8 +33,25 @@ class Invoice(Model, SurrogatePK):
 
     type = Column(Enum(InvoiceType), nullable=False)
     approval_status = Column(Enum(ApprovalStatus), nullable=False)
-    payment_status = Column(db.String, nullable=False)
 
-    items = db.relationship('InvoiceItem', back_populates='invoice')
-    
+    items = db.relationship('InvoiceItem', back_populates='invoice', cascade='all, delete-orphan')
+
     bill = db.relationship('Bill', uselist=False, back_populates='invoice')
+
+    def __init__(self, number: int, due_date: datetime, currency: Currency, notes: str = '',
+                 invoice_type: InvoiceType = InvoiceType.Current, items: List[InvoiceItem] = None,
+                 seller_id: int = None, buyer_id: int = None, total: int = 0,
+                 regular_invoice_date: datetime = None, is_regular: bool = False):
+        self.number = number
+        self.created_date = datetime.utcnow()
+        self.due_date = due_date
+        self.currency = currency
+        self.notes = notes
+        self.type = invoice_type
+        self.items = items or []
+        self.seller_id = seller_id
+        self.buyer_id = buyer_id
+        self.total = total
+        self.regular_invoice_date = regular_invoice_date
+        self.is_regular = is_regular
+        self.approval_status = ApprovalStatus.NotSet
