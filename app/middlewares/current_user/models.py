@@ -1,4 +1,4 @@
-from app.models.role import Role
+from app.models.enums.role import Role
 
 
 class CurrentUser:

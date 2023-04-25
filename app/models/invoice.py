@@ -1,7 +1,8 @@
 from sqlalchemy import Enum
-
 from app.database import Column, Model, SurrogatePK, db, reference_col
-from app.models.role import Role
+from app.models.enums import ApprovalStatus
+from app.models.enums import InvoiceType
+from app.models.enums import Role
 
 
 class Invoice(Model, SurrogatePK):
@@ -19,13 +20,15 @@ class Invoice(Model, SurrogatePK):
     currency = Column(Enum(Role))
 
     buyer_id = reference_col("companies")
-    buyer = db.relationship('Company', foreign_keys=[buyer_id], back_populates='invoices_as_buyer')
+    buyer = db.relationship("Company", back_populates="invoices_as_buyer", foreign_keys=[buyer_id])
 
-    seller_id = reference_col("companies", nullable=False)
-    seller = db.relationship('Company', foreign_keys=[seller_id], back_populates='invoices_as_seller')
+    seller_id = reference_col("companies")
+    seller = db.relationship("Company", back_populates="invoices_as_seller", foreign_keys=[seller_id])
 
-    type = Column(db.String, nullable=False)
-    approval_status = Column(db.String, nullable=False)
+    type = Column(Enum(InvoiceType), nullable=False)
+    approval_status = Column(Enum(ApprovalStatus), nullable=False)
     payment_status = Column(db.String, nullable=False)
 
     items = db.relationship("InvoiceItem", back_populates="invoice")
+    
+    bill = db.relationship("Bill", uselist=False, back_populates="invoice")

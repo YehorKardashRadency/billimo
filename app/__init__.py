@@ -9,10 +9,10 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    with app.app_context():
-        db.create_all()
-        if app.debug:
-            seed_db()
+    # with app.app_context():
+    #     db.create_all()
+    #     if app.debug:
+    #         seed_db()
 
     from .example import example_bp
     from .middlewares import middleware_bp
