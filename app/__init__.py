@@ -10,8 +10,7 @@ def create_app():
     migrate.init_app(app, db)
 
     with app.app_context():
-        db.create_all()
-        if app.debug:
+        if app.config.get("SEED_DB"):
             seed_db()
 
     from .example import example_bp
