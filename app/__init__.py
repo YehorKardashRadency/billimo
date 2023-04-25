@@ -1,13 +1,11 @@
 from flask import Flask
 from app.extensions import db, migrate
-from config import Config
 from app.utils.seed import seed_db
 
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
-
+    app.config.from_prefixed_env()
     db.init_app(app)
     migrate.init_app(app, db)
 
