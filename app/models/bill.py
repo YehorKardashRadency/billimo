@@ -5,7 +5,7 @@ from app.models.enums import BillStatus
 
 
 class Bill(Model, SurrogatePK):
-    __tablename__ = "bills"
+    __tablename__ = 'bills'
 
     invoice_id = reference_col('invoices')
     invoice = db.relationship('Invoice', foreign_keys=[invoice_id], back_populates='bill')

@@ -6,7 +6,7 @@ from app.models.enums import Role
 
 
 class Invoice(Model, SurrogatePK):
-    __tablename__ = "invoices"
+    __tablename__ = 'invoices'
 
     number = Column(db.BigInteger, nullable=False)
     created_date = Column(db.DateTime, nullable=False)
@@ -19,16 +19,16 @@ class Invoice(Model, SurrogatePK):
 
     currency = Column(Enum(Role))
 
-    buyer_id = reference_col("companies")
-    buyer = db.relationship("Company", back_populates="invoices_as_buyer", foreign_keys=[buyer_id])
+    buyer_id = reference_col('companies')
+    buyer = db.relationship('Company', back_populates='invoices_as_buyer', foreign_keys=[buyer_id])
 
-    seller_id = reference_col("companies")
-    seller = db.relationship("Company", back_populates="invoices_as_seller", foreign_keys=[seller_id])
+    seller_id = reference_col('companies')
+    seller = db.relationship('Company', back_populates='invoices_as_seller', foreign_keys=[seller_id])
 
     type = Column(Enum(InvoiceType), nullable=False)
     approval_status = Column(Enum(ApprovalStatus), nullable=False)
     payment_status = Column(db.String, nullable=False)
 
-    items = db.relationship("InvoiceItem", back_populates="invoice")
+    items = db.relationship('InvoiceItem', back_populates='invoice')
     
-    bill = db.relationship("Bill", uselist=False, back_populates="invoice")
+    bill = db.relationship('Bill', uselist=False, back_populates='invoice')
