@@ -3,5 +3,5 @@ from flask_migrate import upgrade
 app = create_app()
 
 if __name__ == '__main__':
-    upgrade()
+    # upgrade()
     app.run()

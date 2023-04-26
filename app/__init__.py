@@ -1,6 +1,6 @@
 from flask import Flask
-from app.extensions import db, migrate
-from app.utils.seed import seed_db
+from .api.extensions import api
+from app.infra.db import db, migrate
 
 
 def create_app():
@@ -8,17 +8,12 @@ def create_app():
     app.config.from_prefixed_env()
     db.init_app(app)
     migrate.init_app(app, db)
-
-    with app.app_context():
-        if app.config.get("SEED_DB"):
-            seed_db()
-
-    from .example import example_bp
-    from .middlewares import middleware_bp
-    from .errors import errors_bp
-    from .commands import command_bp
-    app.register_blueprint(middleware_bp)
-    app.register_blueprint(example_bp)
-    app.register_blueprint(errors_bp)
+    # api.init_app(app)
+    from .common import common_bp
+    from app.infra.seed import command_bp
+    from .api.extensions import api_bp
+    app.register_blueprint(common_bp)
     app.register_blueprint(command_bp)
+    app.register_blueprint(api_bp)
+
     return app
