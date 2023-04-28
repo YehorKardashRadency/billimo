@@ -17,3 +17,8 @@ python-dotenv==1.0.0
 SQLAlchemy==2.0.10
 typing_extensions==4.5.0
 Werkzeug==2.2.3
+
+attrs~=23.1.0
+requests~=2.29.0
+celery~=5.2.7
+kombu~=5.2.4

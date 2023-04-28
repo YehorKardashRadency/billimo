@@ -1,23 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 import attr
-
-
-@attr.s(auto_attribs=True)
-class InvoiceItemDTO:
-    description: str
-    price: Decimal
-    metric: str
-    count: int
-    subtotal: Decimal
-
-
-@attr.s(auto_attribs=True)
-class CompanyDTO:
-    id: int
-    name: str
-    email: str
-    logo: str
+from .invoice_item_dto import InvoiceItemDTO
 
 
 @attr.s(auto_attribs=True)
@@ -37,3 +21,8 @@ class InvoiceDTO:
     category: str
     templatePreview: str
     items: list[InvoiceItemDTO]
+
+
+@attr.s(auto_attribs=True)
+class InvoiceNumberDTO:
+    newInvoiceNumber: int

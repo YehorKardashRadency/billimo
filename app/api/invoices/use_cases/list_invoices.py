@@ -1,10 +1,9 @@
 import attr
 
-from app.api.invoices.features.query.DTO import InvoiceDTO
-from app.api.invoices.features.query.mapper import ListInvoicesPresenterMapper
-from app.api.invoices.models import Invoice
+from app.api.invoices.models import Invoice, InvoiceMapper
+from app.api.invoices.models.dto.invoice_dto import InvoiceDTO
 from app.api.invoices.models.invoice_type import InvoiceType
-from app.core.port import UseCaseRequest, UseCaseResponse, UseCaseOutputPort
+from app.core.port import UseCaseRequest, UseCaseResponse
 from app.core.use_case import UseCase
 from app.infra.db.extensions import db
 
@@ -14,6 +13,7 @@ class ListInvoicesRequest(UseCaseRequest):
     invoice_type: InvoiceType
     regular: bool = False
 
+
 @attr.s(auto_attribs=True)
 class ListInvoicesResponse(UseCaseResponse):
     result: list[InvoiceDTO] = None
@@ -21,8 +21,7 @@ class ListInvoicesResponse(UseCaseResponse):
 
 
 class ListInvoicesUseCase(UseCase):
-    def execute(self, uc_request: ListInvoicesRequest,
-                uc_output_port: UseCaseOutputPort[ListInvoicesResponse]) -> None:
+    def execute(self, uc_request: ListInvoicesRequest) -> ListInvoicesResponse:
         response = ListInvoicesResponse()
         invoices = db.session.execute(
             db
@@ -32,8 +31,6 @@ class ListInvoicesUseCase(UseCase):
             .join(Invoice.buyer)
             .distinct()
         ).scalars().all()
-        dto = list(map(ListInvoicesPresenterMapper.to_dto, invoices))
+        dto = list(map(InvoiceMapper.to_dto, invoices))
         response.result = dto
-        # logic
-        uc_output_port.handle(response)
-
+        return response

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Dict, Any
+from typing import TypeVar, Dict, Any
 
 import attr
 import cattr
@@ -24,14 +24,14 @@ class UseCaseResponse(object):
         return self.error is None or self.result is not None
 
 
-class UseCaseOutputPort(Generic[T]):
+class UseCaseOutputPort:
 
     def __str__(self):
         return f'{__class__.__name__} with Type: {T}'
 
     @abstractmethod
-    def handle(self, response: T) -> None:
-        return NotImplemented
+    def handle(self, response: UseCaseResponse) -> None:
+        raise NotImplemented
 
 
 class JsonContentResult(object):

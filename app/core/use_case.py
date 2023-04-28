@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 
-from .port import UseCaseRequest, UseCaseResponse, UseCaseOutputPort
+from .port import UseCaseRequest, UseCaseResponse
 
 
 class UseCase(ABC):
 
     @abstractmethod
-    def execute(self, uc_request: UseCaseRequest, uc_output_port: UseCaseOutputPort[UseCaseResponse]) -> None:
+    def execute(self, uc_request: UseCaseRequest) -> UseCaseResponse:
         return NotImplemented

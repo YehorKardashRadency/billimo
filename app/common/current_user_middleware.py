@@ -6,9 +6,9 @@ from flask import request, g
 
 class Role(Enum):
     Empty = 'Empty'
-    Admin = 'Admin',
-    Director = 'Director',
-    Manager = 'Manager',
+    Admin = 'Admin'
+    Director = 'Director'
+    Manager = 'Manager'
 
 
 class CurrentUser:
@@ -16,6 +16,10 @@ class CurrentUser:
     name: str
     role: Role
     company_id: int
+
+
+def get_current_user() -> CurrentUser:
+    return g.current_user
 
 
 @common_bp.before_app_request

@@ -1,58 +1,53 @@
-from flask import jsonify
 from werkzeug.exceptions import BadRequest, NotFound, Conflict, Unauthorized, Forbidden
-from . import common_bp
+
+from app.api import api
 
 
-@common_bp.app_errorhandler(BadRequest)
+@api.errorhandler(BadRequest)
 def handle_bad_request_error(error):
-    response = jsonify({
+    response = {
         'status': error.code,
         'title': 'Bad Request',
-        'detail': error.description
-    })
-    response.status_code = error.code
-    return response
+        'message': error.description,
+    }
+    return response, error.code
 
 
-@common_bp.app_errorhandler(NotFound)
+@api.errorhandler(NotFound)
 def handle_not_found_error(error):
-    response = jsonify({
+    response = {
         'status': error.code,
         'title': 'Not Found',
-        'detail': error.description
-    })
-    response.status_code = error.code
-    return response
+        'message': error.description,
+    }
+    return response, error.code
 
 
-@common_bp.app_errorhandler(Conflict)
+@api.errorhandler(Conflict)
 def handle_conflict_error(error):
-    response = jsonify({
+    response = {
         'status': error.code,
         'title': 'Conflict',
-        'detail': error.description
-    })
-    response.status_code = error.code
-    return response
+        'message': error.description,
+    }
+    return response, error.code
 
 
-@common_bp.app_errorhandler(Unauthorized)
+@api.errorhandler(Unauthorized)
 def handle_unauthorized_error(error):
-    response = jsonify({
+    response = {
         'status': error.code,
         'title': 'Unauthorized',
-        'detail': error.description
-    })
-    response.status_code = error.code
-    return response
+        'message': error.description,
+    }
+    return response, error.code
 
 
-@common_bp.app_errorhandler(Forbidden)
+@api.errorhandler(Forbidden)
 def handle_forbidden_error(error):
-    response = jsonify({
+    response = {
         'status': error.code,
         'title': 'Forbidden',
-        'detail': error.description
-    })
-    response.status_code = error.code
-    return response
+        'message': error.description,
+    }
+    return response, error.code

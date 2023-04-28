@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from app.api import ApprovalStatus
 from app.infra.db import db
 from app.api.invoices.models import Invoice, InvoiceItem
 from app.api.shared.models import Company
@@ -243,11 +244,12 @@ def seed_db():
                 total=322,
             ),
             Invoice(
-                number=7,
+                number=8,
                 due_date=datetime.utcnow() + timedelta(days=15),
                 currency=Currency.USD,
                 notes=LOREM,
                 invoice_type=InvoiceType.Template,
+                approval_status=ApprovalStatus.Pending,
                 items=[
                     InvoiceItem(
                         description='Morbi a mattis',

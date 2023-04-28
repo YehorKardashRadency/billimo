@@ -11,6 +11,7 @@ class ApiMapper(ABC, Generic[Entity, Presenter, Payload]):
     @abstractmethod
     def to_dto(entity: Entity) -> Presenter:
         """Map an Entity to a Presenter"""
+
     @staticmethod
     @abstractmethod
     def to_entity(payload: Payload) -> Entity:
