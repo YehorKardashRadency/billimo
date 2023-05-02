@@ -85,7 +85,6 @@ class ListBillsUseCase(UseCase):
                 )
             )
 
-        # TODO add sort
         bills = db.session.execute(query).scalars().all()
         start_index = uc_request.page_index * uc_request.page_size
         end_index = start_index + uc_request.page_size

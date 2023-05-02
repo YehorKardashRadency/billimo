@@ -1,17 +1,17 @@
 import json
+from decimal import Decimal
 
-from sqlalchemy.orm import joinedload
+import attr
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload
+
 from app.api import Bill, Invoice
 from app.api.shared.models import Company
 from app.core.consumer import Consumer
-from app.infra.db import db_session
-
-
-import attr
-from decimal import Decimal
 from app.infra.celery import BaseEvent, celery, publish, MessageTypes
+from app.infra.db import db_session
 from app.infra.queues import Queues
+
 
 @attr.s(auto_attribs=True)
 class UpdateBuyerStatisticEvent(BaseEvent):
@@ -55,6 +55,7 @@ def callback(ch, method, properties, body):
         forPayment=total
     )
     update_buyer_statistic.delay(event.__dict__)
+    session.close()
 
 
 update_buyer_invoices_consumer = Consumer(Queues.update_buyer_invoices_queue, callback)

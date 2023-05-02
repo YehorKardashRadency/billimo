@@ -1,14 +1,13 @@
-import base64
-
 from sqlalchemy import Enum
 
-from .bill_status import BillStatus
+from app.api.invoices.models import InvoiceMapper
 from app.api.shared.models.approval_status import ApprovalStatus
 from app.common.external_api.administration_api import CompanyInfo
 from app.core.mapper import ApiMapper, Payload, Entity
 from app.infra.db import Column, Model, SurrogatePK, db, reference_col
+from .bill_status import BillStatus
 from .dto import BillDTO, DetailedBillDTO
-from app.api.invoices.models import InvoiceMapper
+
 
 class Bill(Model, SurrogatePK):
     __tablename__ = 'bills'
@@ -19,7 +18,8 @@ class Bill(Model, SurrogatePK):
     status = Column(Enum(BillStatus), nullable=False)
     approval_status = Column(Enum(ApprovalStatus), nullable=False)
     bill_cancellation_id = reference_col('bill_cancellations', nullable=True)
-    bill_cancellation = db.relationship('BillCancellation', uselist=False, back_populates='bill', foreign_keys=[bill_cancellation_id])
+    bill_cancellation = db.relationship('BillCancellation', uselist=False, back_populates='bill',
+                                        foreign_keys=[bill_cancellation_id])
 
     def __init__(self, invoice_id, payment_method_id=0,
                  status=BillStatus.Unpaid,
@@ -79,4 +79,3 @@ class DetailedBillMapper(ApiMapper):
             buyer=None,
             seller=None
         )
-

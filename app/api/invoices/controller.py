@@ -1,12 +1,10 @@
-import json
-
+from cerberus import Validator
 from flask import request, jsonify, Response
 from flask_restx import Resource
 
 from app.api.extensions import invoices_ns
 from app.api.shared.models import ApprovalStatus
 from .models.invoice_type import InvoiceType
-from .schemas.new_invoice_schema import invoice_dto_in
 from .use_cases.archive_invoice import ArchiveInvoiceRequest, ArchiveInvoiceUseCase
 from .use_cases.change_invoice_status import ChangeApprovalStatusUseCase, ChangeApprovalStatusRequest
 from .use_cases.create_invoice import CreateInvoiceRequest, CreateInvoiceUseCase
@@ -15,10 +13,8 @@ from .use_cases.get_by_id import GetInvoiceByIdUseCase, GetInvoiceByIdRequest
 from .use_cases.get_last_invoice_number import GetLastInvoiceNumberRequest, GetLastInvoiceNumberUseCase
 from .use_cases.list_invoices import ListInvoicesRequest, ListInvoicesUseCase
 from .use_cases.send_invoice import SendInvoiceRequest, SendInvoiceUseCase
-from ..shared.presenter import Presenter
 from .validators import invoice_schema
-from cerberus import Validator
-
+from ..shared.presenter import Presenter
 from ...common.exceptions import ValidationException
 
 uc_change_status = ChangeApprovalStatusUseCase()
@@ -36,7 +32,6 @@ class Create(Resource):
     _create_presenter = Presenter()
     _send_presenter = Presenter()
 
-    @invoices_ns.expect(invoice_dto_in)
     def post(self):
         data = request.json
 

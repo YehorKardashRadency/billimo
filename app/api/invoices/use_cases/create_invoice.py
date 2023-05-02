@@ -67,7 +67,7 @@ class CreateInvoiceUseCase(UseCase):
         )
         has_rights = user.role is (Role.Admin or Role.Director)
         invoice.approval_status = ApprovalStatus.Approved if (
-                    has_rights or passes_threshold) else ApprovalStatus.Pending
+                has_rights or passes_threshold) else ApprovalStatus.Pending
 
         is_not_template_already = invoice_dto.id is None or invoice.type != InvoiceType.Template
         if invoice_dto.isTemplate and is_not_template_already:

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-to_date = lambda s: datetime.strptime(s, '%Y-%m-%d')
+def to_date(s): return datetime.strptime(s, '%Y-%m-%d')
 
 
 invoice_schema = {

@@ -5,6 +5,7 @@ import attr
 from app.infra.celery import BaseEvent, celery, MessageTypes, publish
 from app.infra.queues import Queues
 
+
 @attr.s(auto_attribs=True)
 class BillNotificationEvent(BaseEvent):
     companySenderId: int

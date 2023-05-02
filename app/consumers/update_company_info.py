@@ -21,6 +21,7 @@ def callback(ch, method, properties, body):
     )
     session.add(company)
     session.commit()
+    session.close()
 
 
 update_company_info_consumer = Consumer(Queues.update_company_info_queue, callback)
