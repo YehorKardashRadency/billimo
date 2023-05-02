@@ -7,7 +7,7 @@ api = Api(
     version='1.0'
 )
 invoices_ns = api.namespace("invoice")
-
-api.add_namespace(invoices_ns)
+bills_ns = api.namespace("bill")
+quick_actions_ns = api.namespace("quickactions")
 
 

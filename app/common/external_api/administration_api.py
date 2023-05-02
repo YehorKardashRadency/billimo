@@ -26,6 +26,14 @@ class CompanyDetails:
     logo: Any
     paymentMethods: Any
 
+@attr.s(auto_attribs=True, kw_only=True)
+class CompanyInfo:
+    id: int
+    email: str
+    name: str
+    logo: bytes
+    address: Any
+    isVerified: bool
 
 class AdministrationApi(BaseExternalApi):
     base_url = os.environ.get("ADMINISTRATION_API")
@@ -39,3 +47,11 @@ class AdministrationApi(BaseExternalApi):
         json = self.get(f'company/getcompanydetails/{company_id}')
         company_details = CompanyDetails(**json)
         return company_details
+
+    def get_companies(self, filter_ids: list[int]) -> list[CompanyInfo]:
+        query = ''
+        for id in filter_ids:
+            query += f'filterId={id}&'
+        json = self.get(f'company/getcompanies?{query}')
+        companies = [CompanyInfo(**company) for company in json]
+        return companies
