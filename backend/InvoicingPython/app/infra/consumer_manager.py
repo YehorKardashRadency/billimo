@@ -17,6 +17,7 @@ class ConsumerManager:
         self.channel = self.connection.channel()
 
     def add_consumer(self, consumer: Consumer):
+        self.channel.queue_declare(consumer.queue, durable=True)
         self.channel.basic_consume(consumer.queue, consumer.callback, auto_ack=True)
 
     def add_consumers(self, consumers: list[Consumer]):

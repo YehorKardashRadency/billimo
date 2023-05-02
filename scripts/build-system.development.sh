@@ -4,7 +4,8 @@ set -e
 docker build -f ../frontend/Dockerfile -t frontend ../frontend/ --build-arg env=staging
 docker build -f ../backend/Administration/Dockerfile -t administration ../backend/
 docker build -f ../backend/Payments/Dockerfile -t payments ../backend/
-docker build -f ../backend/Invoicing/Dockerfile -t invoicing ../backend/
+# docker build -f ../backend/Invoicing/Dockerfile -t invoicing ../backend/
 docker build -f ../backend/EmailService/Dockerfile -t email-service ../backend/
 docker build -f ../backend/ApiGateway/Dockerfile -t api-gateway ../backend/
+docker build -f ../backend/InvoicingPython/Dockerfile -t invoicing-python ../backend/InvoicingPython
 

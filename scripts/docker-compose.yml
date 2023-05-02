@@ -28,6 +28,11 @@ services:
       - mynetwork
     env_file:
       - ../.envs/rabbitmq.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   api-gateway:
     container_name: 'api-gateway'
@@ -52,18 +57,60 @@ services:
     env_file:
       - ../.envs/administration.env
 
+  # invoicing:
+  #   container_name: 'invoicing'
+  #   image: 'invoicing'
+  #   ports:
+  #     - "7271:7271"
+  #   networks:
+  #     - mynetwork
+  #   depends_on:
+  #     - "postgres"
+  #   env_file:
+  #     - ../.envs/invoicing.env
+
   invoicing:
-    container_name: 'invoicing'
-    image: 'invoicing'
+    container_name: 'invoicing-python'
+    image: 'invoicing-python'
     ports:
       - "7271:7271"
     networks:
       - mynetwork
+    entrypoint: python
+    command: app.py
     depends_on:
       - "postgres"
+      - "rabbitmq"
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 10
+        window: 60s
+    stop_signal: SIGINT
     env_file:
-      - ../.envs/invoicing.env
-
+      - ../.envs/invoicing-python.env
+  invoicing-worker:
+    container_name: 'invoicing-python-worker'
+    image: 'invoicing-python'
+    networks:
+      - mynetwork
+    entrypoint: celery
+    command: -A make_celery worker --loglevel=info 
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 10
+        window: 60s
+    stop_signal: SIGINT
+    env_file:
+      - ../.envs/invoicing-python.env
   email-service:
     container_name: 'email-service'
     image: 'email-service'

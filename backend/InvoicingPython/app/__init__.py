@@ -6,7 +6,6 @@ from app.consumers import consumers
 from .api import api
 from .common.json_encoder import BetterJsonEncoder
 
-
 def create_app():
     app = Flask(__name__)
     app.config.from_prefixed_env()
@@ -20,6 +19,7 @@ def create_app():
     run_consumer_manager(consumer_manager)
 
     app.json_encoder = BetterJsonEncoder
+
 
     from .common import common_bp
     from app.infra.seed import command_bp

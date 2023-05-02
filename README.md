@@ -1,5 +1,16 @@
 # Billimo
 
+## Running Docker
+
+```sh
+
+cd scripts/
+chmod +x ./build-system.development.sh
+./build-system.development.sh
+docker-compose up
+
+```
+
 ## Navigation
 
 `.azure` - Microsoft Azure related scripts
@@ -34,11 +45,13 @@ _Don't forget to fill in the **`.env`** file. Use the **`.env.example`** file as
 - [PostgreSQL](https://www.postgresql.org/download/)
 
 ## Tools
+
 _TBD_
 
 ## Git
 
 ### Branches
+
 - `main` - release version.
 - `dev` - development version.
 
