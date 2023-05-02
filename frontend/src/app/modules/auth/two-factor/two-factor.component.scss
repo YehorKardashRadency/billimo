@@ -1,0 +1,40 @@
+.two-factor-container{
+  width: 360px;
+}
+
+.digit-inputs {
+  display: flex;
+  flex-direction: row;
+
+  & > app-input {
+    margin-right: 0.5rem;
+    width: 44px;
+    height: 40px;
+
+    &:last-child {
+      margin-right: unset;
+    }
+  }
+}
+
+.help-text {
+  color: #898E96;
+  line-height: 20px;
+}
+
+.register-link {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.link {
+  color: #0D99FF;
+  cursor: pointer;
+}
+
+.error-message {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ED5252;
+}

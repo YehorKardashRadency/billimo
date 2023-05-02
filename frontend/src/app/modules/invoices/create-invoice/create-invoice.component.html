@@ -1,0 +1,201 @@
+<div class="mt-12 ml-16">
+  <div>
+    <button class="mb-9 flex items-center" [routerLink]="['/invoices']">
+      <img src="assets/images/arrow_back.svg" alt="back">
+      <p class="font-medium">Back to Invoices</p>
+    </button>
+    <app-invoice-template #preview id="preview" class="template" [invoiceNumber]="invoiceNumberControl?.value ?? ''"
+      [invoiceDate]="dateControl?.value" [buyer]="buyer?.value" [items]="invoiceItems?.getRawValue() ?? []"
+      [notes]="notesControl.value" [total]="Total" [title]="'Invoice'" [currency]="currency.value"
+      [seller$]="seller$"></app-invoice-template>
+  </div>
+  <form class="invoice__form w-full flex flex-col bg-white absolute right-0 top-0" [formGroup]="createInvoiceForm"
+    >
+    <div class="py-6 px-8 flex flex-row justify-between">
+      <div>
+        <h3>Create an Invoice</h3>
+      </div>
+      <div>
+        <button class="mr-6">
+          <img src="assets/images/upload_icon.svg" alt="upload">
+        </button>
+        <button class="mr-6">
+          <img src="assets/images/delete_icon.svg" alt="delete">
+        </button>
+        <button [routerLink]="['/invoices']">
+          <img src="assets/images/cancel_icon.svg" alt="cancel">
+        </button>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="py-6 px-8 ">
+      <h3>Company Details</h3>
+      <div class="flex justify-between items-center mt-6 mb-4">
+        <p class="company__deatils font-medium">We don't have company details yet</p>
+        <app-switch [control]="companyDetailsEmailSwitch"></app-switch>
+      </div>
+      <div [hidden]="!companyDetailsEmailSwitch.value">
+        <p class="text w-64">Company e-mail</p>
+        <app-input [control]="companyEmail" placeholder="example@companyname.com"></app-input>
+        <div *ngIf="companyEmail.hasError('required') && (companyEmail.touched)" class="error-message w-full help-text">
+          required
+        </div>
+        <div *ngIf="companyEmail.hasError('email') && (companyEmail.touched)" class="error-message w-full help-text">
+          Wrong Email
+        </div>
+      </div>
+      <div [hidden]="companyDetailsEmailSwitch.value" *ngIf="buyer">
+        <app-company-search [formControl]="buyer" [selectedBuyerName]="invoiceFormData?.invoice?.company?.name"></app-company-search>
+        <div *ngIf="buyer?.hasError('required') && buyer?.touched" class="error-message w-full help-text">
+          required
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="p-8">
+      <h3>Invoice Info</h3>
+      <div class="mt-4">
+        <div>
+          <p class="text">Invoice number</p>
+          <app-input [control]="invoiceNumberControl" prefix="INV-" [disabled]="true"></app-input>
+          <div *ngIf="invoiceNumberControl?.hasError('required') && invoiceNumberControl?.touched"
+            class="error-message w-full help-text">
+            required
+          </div>
+          <div *ngIf="invoiceNumberControl?.hasError('pattern') && (invoiceNumberControl?.touched || invoiceItems?.dirty)"
+            class="error-message w-full help-text">
+            Wrong format
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <div>
+            <p class="text w-64">Invoice Date</p>
+            <app-input [type]="'date'" [control]="dateControl"></app-input>
+          </div>
+          <div>
+            <p class="text w-64">Invoice Due Date</p>
+            <app-input [type]="'date'" [min]="formattedDate" [control]="dueDateControl"></app-input>
+            <div *ngIf="dueDateControl.hasError('required') && dueDateControl.touched"
+              class="error-message w-full help-text">
+              required
+            </div>
+          </div>
+        </div>
+        <div class="flex w-80">
+          <div class="w-40">
+            <p class="text">Currency</p>
+            <app-dropdown class="w-20" [formControl]="currency"
+              [items]="[Currency.USD, Currency.EUR, Currency.UAN]"></app-dropdown>
+          </div>
+          <div class="ml-4 w-40">
+            <p class="text">Tax in % (optional)</p>
+            <app-input [placeholder]="'0%'" [type]="'number'" [control]="taxControl"></app-input>
+            <div *ngIf="taxControl.hasError('min') && taxControl.touched" class="error-message w-full help-text">
+              Too Low
+            </div>
+            <div *ngIf="taxControl.hasError('max') && taxControl.touched" class="error-message w-full help-text">
+              Too High
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="text">Notes</p>
+          <app-input placeholder="Type additional notes here" [control]="notesControl"></app-input>
+          <div *ngIf="notesControl.hasError('required') && notesControl.touched" class="error-message w-full help-text">
+            required
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="p-8">
+      <div formArrayName="invoiceItems">
+        <div *ngFor="let item of invoiceItems?.controls; let i=index" [formGroupName]="i">
+          <div class="flex justify-between">
+            <h3>Item {{i+1}}</h3>
+            <img src="assets/images/icons/close.svg" alt="" (click)="removeItemFormGroup(i)">
+          </div>
+          <div class="mt-8 mb-4">
+            <div>
+              <p class="text">Description</p>
+              <app-input placeholder="Type description here"
+                [control]="$any(invoiceItems).controls[i].get('description')"></app-input>
+              <div
+                *ngIf="$any(invoiceItems).controls[i].get('description').hasError('required') && $any(invoiceItems).controls[i].get('description').touched"
+                class="error-message w-full help-text">
+                required
+              </div>
+            </div>
+            <div>
+              <p class="text">Metric</p>
+              <div class="flex justify-start">
+                <div class="w-64">
+                  <app-dropdown formControlName="metric"
+                    [items]="[Metrics.Quantity, Metrics.Hours, Metrics.Months]"></app-dropdown>
+                </div>
+                <div class="pl-4">
+                  <app-counter formControlName="count"></app-counter>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text">Price</p>
+              <div class="flex items-center justify-between">
+                <div class="w-64 flex">
+                  <div class="currency__value w-20">{{currency.value}}</div>
+                  <app-input class="currency w-44" placeholder="00.00" [type]="'text'"
+                    [control]="$any(invoiceItems).controls[i].get('price')!"></app-input>
+                </div>
+                <div
+                  *ngIf="$any(invoiceItems).controls[i].get('price').hasError('pattern') && $any(invoiceItems).controls[i].get('price').touched"
+                  class="error-message w-full help-text">
+                  wrong format
+                </div>
+                <div
+                  *ngIf="$any(invoiceItems).controls[i].get('price').hasError('required') && $any(invoiceItems).controls[i].get('price').touched"
+                  class="error-message w-full help-text">
+                  required
+                </div>
+                <p>Subtotal: {{this.getSubTotal(i)}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-button variant="outlined" [config]="addItemButtonConfig"></app-button>
+    </div>
+    <hr class="divider">
+    <div class="p-8">
+      <div class="flex mb-5" *ngIf="!invoiceFormData?.invoice">
+        <div>
+          <input type="checkbox" class="checkbox" id="template" formControlName="isTemplate" />
+          <label for="template"></label>
+        </div>
+        <div >
+          <p>Save this invoice as a template</p>
+          <p class="help__text">
+            You will be able to use this invoice as a template and create new invoices based on it.
+          </p>
+        </div>
+      </div>
+      <div class="flex justify-between mb-8">
+          <div>
+            <input type="checkbox" class="checkbox" id="regular" (change)="onRegularChange($event)"/>
+            <label for="regular"></label>
+          </div>
+          <div class="self-center is-regular-container">
+            <p>Make this invoice regular</p>
+            <div>
+              <app-input *ngIf="isRegular" [type]="'date'" [control]="regularInvoiceDate"></app-input>
+            </div>
+          </div>
+      </div>
+      <p class="text-end font-medium">Total: {{currency.value}} {{Total}}</p>
+    </div>
+    <div class="px-8 pb-4 flex justify-around gap-4">
+      <app-button *ngIf="!invoiceFormData?.invoice?.id" class="flex-1" variant="outlined" text="Save" (onClick)="createOrEditInvoice()" ></app-button>
+      <app-button *ngIf="!invoiceFormData?.invoice?.id" class="flex-1" text="Create & Send" (onClick)="createOrEditInvoice(true)" ></app-button>
+      <app-button *ngIf="invoiceFormData?.invoice?.id" class="flex-1" text="Save edited" (onClick)="createOrEditInvoice()"></app-button>
+    </div>
+  </form>
+</div>

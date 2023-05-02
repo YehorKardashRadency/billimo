@@ -1,0 +1,30 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div>
+  <div class="templates-header">
+    <div>
+      <h3>Templates</h3>
+    </div>
+  </div>
+  <div class="templates-container" *ngIf="(templates$|async) as templates">
+    <div *ngFor="let template of templates" class="flex flex-col items-center" (click)="onTemplateClick(template)">
+      <div class="preview-container relative">
+        <img [src]="template.templatePreview" class="preview-image">
+        <div class="flex justify-between absolute bottom-0 left-0 right-0 px-4 pb-2 actions">
+          <img src="assets/images/icons/view.svg" alt="" srcset="">
+          <img src="assets/images/icons/delete.svg" alt="" srcset="">
+        </div>
+      </div>
+      <div class="w-full px-4">
+        <p class="name">{{template.company.name}}</p>
+        <p class="text-grey-2 text-sm">{{template.notes}}</p>
+        <p class="text-grey-2 text-sm">July 25, 2022</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="empty-invoices-container" *ngIf="isEmpty && !isLoading">
+  <div>
+    <img class="empty-invoices__image" src="../../../../../assets/images/icons/empty_icon.svg" alt="">
+    <p class="empty-invoices__text">You have no templates.</p>
+  </div>
+</div>

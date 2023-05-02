@@ -1,0 +1,11 @@
+<app-modal-container [maxWidth]="'450px'">
+  <app-modal-failed></app-modal-failed>
+  <div class="error-txt">
+    <p>Error:{{data.error}}</p>
+  </div>
+  <app-modal-actions-container>
+    <app-button [text]="data.primaryButton?.label" variant="standard"
+    [mat-dialog-close]
+    [routerLink]="data.primaryButton?.route"></app-button>
+  </app-modal-actions-container>
+</app-modal-container>

@@ -1,0 +1,12 @@
+<div class="w-full h-full flex">
+    <ng-container *ngFor="let filter of set; let i = index">
+        <app-filter-button 
+        [first]="i===0" 
+        [active]="i===current" 
+        [last]="i===set.length-1" 
+        [text]="filter" 
+        [numberInSet] = "i"
+        (currentChange)="currentChange($event)">
+    </app-filter-button>
+    </ng-container>
+</div>

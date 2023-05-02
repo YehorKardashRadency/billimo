@@ -1,0 +1,137 @@
+<div *ngIf="(selectedBill$ | async) as bill">
+  <form class="grid grid-cols-[48%_1fr] gap-[34px]" [formGroup]="payBillForm" novalidate
+        (ngSubmit)="payBill()">
+    <div class="pt-12 pl-12">
+      <button class="flex items-center" [routerLink]="['/bills/received']">
+        <img src="assets/images/arrow_back.svg" alt="back">
+        <p class="font-medium text-base ml-1">Back to Bills</p>
+      </button>
+
+      <app-invoice-template-new
+        [title]="'Bill'"
+        [buyer]="bill.buyer"
+        [seller]="bill.seller"
+      [invoice]="bill.invoice"
+      [classList]="['min-h-[968px]']">
+      </app-invoice-template-new>
+    </div>
+
+  <div class="bg-white py-6">
+    <div class="px-8 relative">
+      <h4 class="font-medium text-[#202123] text-lg">Payment Details</h4>
+      <div *ngIf="(approvalSettings$ | async) as settings">
+        <span *ngIf="settings.onPayingInvoicesHigherThan && settings.onPayingInvoicesHigherThan" class="font-normal text-[#898E96] text-sm">
+          Payment under ${{settings.payingInvoicesThreshold}} don't need to be approved
+        </span>
+      </div>
+
+        <div class="absolute top-0 right-8 grid gap-6 grid-flow-col">
+          <button>
+            <img src="assets/images/refresh.svg" alt="refresh">
+          </button>
+          <button>
+            <img src="assets/images/delete_icon.svg" alt="delete">
+          </button>
+          <button [routerLink]="['/bills']">
+            <img src="assets/images/cancel_icon.svg" alt="cancel">
+          </button>
+        </div>
+      </div>
+      <div class="bg-[#E5E8EC] h-px mt-8"></div>
+      <div class="mt-8 mx-8">
+        <div class="bg-[#F9FAFB] rounded-lg text-base border-[#E5E8EC] border-[1px] px-6 py-[20px]">
+          <span class="text-[#454950] font-normal">Invoice Number</span>
+          <span class="ml-4 font-medium text-[#202123]">{{ bill.invoice.number }}</span>
+        </div>
+        <div class="mt-8">
+          <h4 class="font-medium text-[#202123] text-lg">Company Vendor</h4>
+          <div class="bg-[#F9FAFB] px-6 py-4">
+            <div class="flex items-center">
+              <img class="h-[48px] mr-3" [src]="'data:image/png;base64,' + bill.seller.logo" alt="logo">
+              <div>
+                <p class="text-[#202123] font-medium text-base">{{ bill.seller.name }}</p>
+                <span class="mt-1 text-[#898E96] text-sm">Regular payment is not set</span>
+              </div>
+            </div>
+            <div class="h-px bg-[#E5E8EC] mt-4"></div>
+            <div class="mt-4 text-sm text-[#898E96]">No previous bills for this company</div>
+          </div>
+        </div>
+      </div>
+      <div class="h-px bg-[#E5E8EC] mt-8"></div>
+      <div class="mt-8 mx-8">
+        <h4 class="font-medium text-[#202123] text-lg">Terms of Payment</h4>
+
+        <div class="mt-6 grid grid-cols-[24px_1fr] gap-2">
+          <input class="self-start h-[24px] w-full text-[#0D99FF]" formControlName="termOfPayment" type="radio"
+                 id="pay-now" value="pay-now" [(ngModel)]="selectedOption">
+          <div>
+            <p class="text-[#202123] font-medium text-base">Pay now</p>
+            <span class="text-[#898E96] text-sm font-normal">Choose a payment method to make the transaction</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-[24px_1fr] gap-2">
+          <input class="self-start h-[24px] w-full text-[#0D99FF]" formControlName="termOfPayment" type="radio"
+                 id="pay-date" value="pay-date" [(ngModel)]="selectedOption">
+          <div>
+            <p class="text-[#202123] font-medium text-base">Pay on a specific date</p>
+            <span class="text-[#898E96] text-sm font-normal">The money will be transferred to the Billimo service. On the specified date, the money will be transferred to the vendor's account.</span>
+            <div *ngIf="selectedOption === 'pay-date'"
+                 class="mt-4 grid items-center grid-flow-col grid-cols-[auto_auto_1fr]">
+              <input type="checkbox" class="w-[24px] h-[24px]" id="approvement"/>
+              <span class="ml-2 font-normal text-base text-[#454950]">Require approvement</span>
+              <div class="justify-self-end">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                         (dateChange)="onDateSelected($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-[24px_1fr] gap-2">
+          <input class="self-start h-[24px] w-[24px] text-[#0D99FF]" formControlName="termOfPayment" type="radio"
+                 id="pay-spread" value="pay-spread" [(ngModel)]="selectedOption">
+          <div>
+            <p class="text-[#202123] font-medium text-base">Spread payment</p>
+            <span class="text-[#898E96] text-sm font-normal">We will pay the vendor upfront on your behalf. Pay us back on your terms over 1-12 months.</span>
+          </div>
+        </div>
+      </div>
+      <div class="bg-[#E5E8EC] h-px mt-8"></div>
+
+      <div class="mt-8 mx-8">
+        <h4 class="font-medium text-[#202123] text-lg mb-2">Payment method</h4>
+
+
+        <app-select [Items]="bill.buyer.paymentMethods" formControlName="paymentMethod" [myTemplate]="myTemplate"></app-select>
+
+
+        <div class="mt-8 mx-8">
+          <p *ngIf="!canPay" class="text-[#ED5252] text-sm mb-8">Payment over ${{payingSettings}} needs to be approved</p>
+          <app-button *ngIf="canPay" [classList]="['rounded-lg', 'text-white', 'font-normal', 'text-base', 'px-3']"
+                      text="Pay the bill"
+                      [disabled]="isPayDisabled()"
+                      type="submit"
+          ></app-button>
+          <app-button *ngIf="!canPay" [classList]="['rounded-lg', 'text-white', 'font-normal', 'text-base', 'px-3']" [config]="approveBillConfig"></app-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<ng-template #myTemplate let-paymentMethod="item">
+  <div class="bg-[#EFFAF4] p-2">
+    <img src="https://placehold.co/24x24" alt="logo">
+  </div>
+  <div>
+    <p class="text-[#454950] font-medium text-base">{{ paymentMethod.title }}</p>
+    <span class="text-[#898E96] text-sm font-normal" *ngIf="paymentMethod.additional">{{ paymentMethod.additional }}</span>
+  </div>
+</ng-template>

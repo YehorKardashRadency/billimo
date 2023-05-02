@@ -1,0 +1,5 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///home/yokano/Documents/Projects/internship-2023-billimo/.github/workflows/deploy.yml"
+  }
+}

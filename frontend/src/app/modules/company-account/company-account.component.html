@@ -1,0 +1,13 @@
+<app-header [title]="'Company account'" [icon]="'assets/images/icons/company.svg'"></app-header>
+<app-tabs height="auto">
+  <app-tab title="Employees & Roles" link="employees">
+  </app-tab>
+  <app-tab title="Addresses" [count]="addressesCount" link="adresses">
+  </app-tab>
+  <app-tab title="Payment methods" [count]="methodsCount$ | async" link="payment-methods">
+  </app-tab>
+  <app-tab title="General" link="documents" >
+  </app-tab>
+</app-tabs>
+
+<div *ngIf="templateRef" [ngTemplateOutlet]="templateRef"> </div>

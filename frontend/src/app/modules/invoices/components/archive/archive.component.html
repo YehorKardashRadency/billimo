@@ -1,0 +1,23 @@
+<app-invoices-table-wrapper [isLoading]="isLoading" title="Archive" *ngIf="!(isEmpty$ | async)"
+  [handleArchivedInvoices]="true">
+  <div class="container">
+    <app-table-header [selectAll]="selectAll" [cells]="headerCells"
+      (headerEvent)="headerClick($event)"></app-table-header>
+    <div *ngIf="archivedInvoices$ | async as invoices" class="w-full justify-between items-center">
+      <app-table-row *ngFor="let row of invoices; index as i" [data]="row" [cells]="headerCells" [rowIndex]="i"
+        (rowEvent)="rowClick($event)" [selectAll]="selectAll">
+      </app-table-row>
+    </div>
+  </div>
+  <div class="flex justify-end">
+    <a class="button export-button" csvLink [data]="(exportedInvoices | async) ?? []">
+      Export as csv
+    </a>
+  </div>
+</app-invoices-table-wrapper>
+<div class="empty-invoices-container" *ngIf="(isEmpty$ | async) && !isLoading">
+  <div>
+    <img class="empty-invoices__image" src="../../../../../assets/images/icons/empty_icon.svg" alt="">
+    <p class="empty-invoices__text">You have no archived invoices.</p>
+  </div>
+</div>

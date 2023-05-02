@@ -1,0 +1,10 @@
+@using EmailService.RazorHtmlEmails.Views.Emails.Invite
+@model InvitationEmailViewModel
+
+@{
+    ViewData["EmailTitle"] = "Hi, " + @Model.Username + "!";
+}
+
+<p style="color: #5f6a6a">
+    You've been invited to join a Billimo. It's an automated tool that streamlines the invoicing process, making it more efficient and organized. Click the following invitation <a style="text-decoration: underline" href="@Model.InvitationLinkUrl">link</a> to join. Your one time password is @Model.Password
+</p>

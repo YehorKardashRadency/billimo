@@ -1,0 +1,49 @@
+<app-form-container>
+    <h3>Business Address</h3>
+    <div class="my-5">
+        <app-progress-bar [progress]="0.6"></app-progress-bar>
+    </div>
+    <div class="input-row">
+        <p>Country</p>
+        <app-dropdown [items]="countries" [formControl]="getFormControl('country')"></app-dropdown>
+        <app-generic-error-message [control]="form.controls['country']"></app-generic-error-message>
+    </div>
+    <div class="input-row">
+        <p>City</p>
+        <app-input type="text" placeholder="Kyiv" [control]="getFormControl('city')"></app-input>
+        <app-generic-error-message [control]="form.controls['city']"></app-generic-error-message>
+    </div>
+    <div class="input-row">
+        <p>Street</p>
+        <app-input type="text" placeholder="Enter Street" [control]="getFormControl('street')"></app-input>
+        <app-generic-error-message [control]="form.controls['street']"></app-generic-error-message>
+    </div>
+    <div class="flex gap-10">
+        <div class="input-row">
+            <p>Apartment (optional)</p>
+            <app-input type="text" placeholder="Enter apartment" [control]="getFormControl('apartment')"></app-input>
+            <app-generic-error-message [control]="form.controls['apartment']"></app-generic-error-message>
+        </div>
+        <div class="input-row">
+            <p>Zip Code</p>
+            <app-input type="text" placeholder="00000" [control]="getFormControl('zipCode')"></app-input>
+            <app-generic-error-message [control]="form.controls['zipCode']"></app-generic-error-message>
+        </div>
+    </div>
+    <div class="input-row text-grey-1">
+        <label class="control control--checkbox">I agree to <a (click)="openTermsAndConditions()"
+                class="terms-link">Terms and Conditions</a>
+            <input type="checkbox" [formControl]="getFormControl('terms')" />
+            <div class="control__indicator"></div>
+        </label>
+        <app-generic-error-message [control]="form.controls['terms']"></app-generic-error-message>
+    </div>
+    <div class="flex justify-between gap-5">
+        <app-button text="Back" class="flex-1" variant="outlined" (onClick)="goBack()"></app-button>
+        <app-button text="Register" class="flex-1" (onClick)="onSubmit()"></app-button>
+    </div>
+    <p class="login-suggestion">
+        <span>Already have an account?</span>
+        <a href="/login">Login</a>
+    </p>
+</app-form-container>

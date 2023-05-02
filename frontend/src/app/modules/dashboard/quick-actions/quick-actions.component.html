@@ -1,0 +1,78 @@
+<div class="rounded-xl p-8 bg-white" *ngIf="(actions$ | async) as vm; else loading">
+  <h3 class="block mb-8">Pending your Action</h3>
+  <div class="flex flex-row actions flex-wrap justify-between">
+
+    <ng-container *ngIf="hasRequestsAccess$ | async; else regularUser">
+      <div class="flex flex-row grow justify-between cursor-pointer" routerLink="/invoices/requests">
+        <div class="flex flex-row items-center">
+          <img class="mr-4" src="assets/images/icons/bill_approval.svg" alt="Bill Approval">
+          <div>
+            <span>Approve</span>
+            <p class="help-text">{{vm.approveInvoices}} invoices</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flex flex-row grow justify-between cursor-pointer" routerLink="/bills/requests">
+        <div class="flex flex-row items-center">
+          <img class="mr-4" src="assets/images/icons/bill_approval.svg" alt="Bill Approval">
+          <div>
+            <span>Approve</span>
+            <p class="help-text">{{vm.approveBills}} bills</p>
+          </div>
+        </div>
+      </div>
+
+      <div  class="flex flex-row grow justify-between cursor-pointer" routerLink="/invoices/current">
+        <div class="flex flex-row items-center">
+          <img class="mr-4" src="/assets/images/icons/invoices_green.svg" alt="Bill Approval">
+          <div>
+            <span>Send</span>
+            <p class="help-text">{{vm.currentInvoices}} current invoices</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-row grow justify-between cursor-pointer" routerLink="/bills/received">
+        <div class="flex flex-row items-center">
+          <img class="mr-4" src="/assets/images/icons/invoices_red.svg" alt="Bill Approval">
+          <div>
+            <span>Pay the bills</span>
+            <p class="help-text">{{vm.payBills}} bills</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #regularUser>
+      <div  class="flex flex-row grow justify-between cursor-pointer" routerLink="/invoices/current">
+        <div class="flex flex-row items-center">
+          <img class="mr-4" src="/assets/images/icons/invoices_green.svg" alt="Bill Approval">
+          <div>
+            <span>Send</span>
+            <p class="help-text">{{vm.currentInvoices}} current invoices</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-row grow justify-between cursor-pointer" routerLink="/bills/received">
+        <div class="flex flex-row items-center">
+          <img class="mr-4" src="/assets/images/icons/invoices_red.svg" alt="Bill Approval">
+          <div>
+            <span>Pay the bills</span>
+            <p class="help-text">{{vm.payBills}} bills</p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="rounded-xl p-8 bg-white mt-3">
+    <app-placeholder [lines]="3" [baseInterval]="0" [flexOption]="'row'"></app-placeholder>
+  </div>
+</ng-template>
+

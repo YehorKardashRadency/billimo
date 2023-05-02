@@ -1,0 +1,27 @@
+.email-container{
+  background: white;
+  padding: 32px;
+  box-shadow: 0 4px 18px rgba(173, 184, 202, 0.16);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.email-container-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.email-container-item span {
+  color: #454950;
+  font-weight: 500;
+}
+
+hr {
+  height: 1px;
+  background: #E5E8EC;
+  width: 100%;
+}

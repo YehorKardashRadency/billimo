@@ -1,0 +1,13 @@
+<div class="payment-methods-container">
+  <div class="flex flex-row justify-between items-center">
+    <h3>Payment methods</h3>
+    <app-button [config]="config" variant="standard" (click)="plaidConnect()"></app-button>
+  </div>
+
+  <div class="custom-container mt-6 pb-4">
+    <app-payment-methods-item class="item" [model]="item" *ngFor="let item of (methods$ | async); let i = index"
+                              [ngClass]="selected == i ? 'selected' : ''" (click)="select(i)">
+    </app-payment-methods-item>
+  </div>
+</div>
+

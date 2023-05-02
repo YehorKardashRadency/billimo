@@ -1,0 +1,9 @@
+<app-modal-container maxWidth="650px" [showClose]="true">
+  <app-modal-success text="Your bill {{responseCreateTransaction.invoiceNumber}} has been successfully paid. {{responseCreateTransaction.companyName}} company will receive
+   a notification." title="Success!"></app-modal-success>
+  <p>What do you want to do next?</p>
+  <app-modal-actions-container>
+    <app-button text="Export" variant="outlined" [mat-dialog-close]></app-button>
+    <app-button text="Go to Dashboard" variant="standard" [mat-dialog-close] routerLink="/dashboard"></app-button>
+  </app-modal-actions-container>
+</app-modal-container>

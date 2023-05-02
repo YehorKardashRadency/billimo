@@ -1,0 +1,44 @@
+<div class="flex flex-col h-full w-full">
+  <div class="flex justify-between h-12 items-start mb-7">
+    <div class="mb-1">
+      <h3>Requests</h3>
+      <p class="help-text">Waiting for your approval</p>
+    </div>
+    <div class="flex">
+      <app-sort-dropdown [items]="sortBy"
+                          [closeAfterSelecting]="true"
+                          (onSelect)="onSorterClick($event)"
+                          [displaySelected]="true">
+        <ng-template let-header #header><span class="info">Sort by</span></ng-template>
+        <ng-template let-rowDetail #body>{{rowDetail.title}}</ng-template>
+      </app-sort-dropdown>
+    </div>
+  </div>
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <div class="h-full" *ngIf="!isLoading">
+    <div *ngIf="!isEmpty && bills$">
+      <app-table-header [cells]="billsRequestsCells" (headerEvent)="headerClick($event)"></app-table-header>
+
+      <div class="mt-5 h-full w-full flex flex-col justify-between" *ngIf="(bills$ | async) as bills">
+        <div class="table">
+          <app-table-row *ngFor="let row of bills.items; index as i"
+                [data]="row"
+                [rowIndex]="i"
+                [cells]="billsRequestsCells"
+                (rowEvent)="onRowClick($event)" >
+          </app-table-row>
+        </div>
+        <app-pagination *ngIf="bills.totalPages > 1 && (pageSize$ | async) as pageSize" [totalCount]="bills.totalCount" [pageSize]="pageSize"
+          [currentPage]="bills.pageNumber" (onPageChange)="toPage($event)"></app-pagination>
+      </div>
+    </div>
+    <div class="h-full flex justify-center items-center" *ngIf="isEmpty">
+      <div class="flex items-center flex-col">
+        <div class="appoved__container flex justify-center w-20 h-20 mb-4">
+          <img class="block" src="/assets/images/isApproved.svg" alt="isApprovedIcon">
+        </div>
+        <p>All bills are approved!</p>
+      </div>
+    </div>
+  </div>
+</div>

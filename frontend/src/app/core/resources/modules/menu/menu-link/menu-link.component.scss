@@ -1,0 +1,35 @@
+a{
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 24px;
+  padding-bottom: 24px;
+  & img{
+    margin-right: 10px;
+  }
+  &:hover{
+    color: #0D99FF;
+  }
+  &:hover .icon{
+    background: #0D99FF;
+  }
+}
+.active{
+  color: #0D99FF;
+  .icon{
+    background: #0D99FF;
+  }
+}
+.icon{
+  size: 1.5em;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: .12s;
+  margin-right: 0.625em;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background: #898E96;
+}
+
+

@@ -1,0 +1,9 @@
+<app-modal-container>
+    <app-modal-success text="'Invoice INV-0012 has been successfully approved. You can track your payments in Bill Payments tab.'"></app-modal-success>
+    <app-modal-actions-container>
+        <button mat-button class='btn standard'
+        mat-dialog-close>Just Close</button>
+            <button mat-button class='btn outlined'
+            [mat-dialog-close]="'/shell'">Redirect</button>
+    </app-modal-actions-container>
+</app-modal-container>

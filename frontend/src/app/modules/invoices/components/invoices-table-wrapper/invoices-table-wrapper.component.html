@@ -1,0 +1,18 @@
+
+
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div>
+  <div *ngIf="!isLoading" >
+    <div class="invoices-header">
+      <div>
+        <h3>{{title}}</h3>
+        <p class="text-grey-2">{{subTitle}}</p>
+      </div>
+      <div class="sort-by-container">
+        <app-all-companies-dropdown [handleArchivedInvoices]="handleArchivedInvoices"></app-all-companies-dropdown>
+      </div>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>
+

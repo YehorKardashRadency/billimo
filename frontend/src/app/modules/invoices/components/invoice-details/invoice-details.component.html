@@ -1,0 +1,14 @@
+<app-modal-container maxHeight="640px" minWidth="684px">
+  <div class="invoice overflow-y-auto overflow-x-hidden">
+    <app-invoice-template [title]="'Invoice'" [invoiceNumber]="data.invoice.number"
+      [invoiceDate]="data.invoice.createdDate" [buyer]="data.invoice.company" [items]="data.invoice.items"
+      [notes]="data.invoice.notes" [total]="getTotal()" [title]="'Invoice'" [currency]="data.invoice.currency"
+      [seller$]="seller$"></app-invoice-template>
+  </div>
+  <div class="pt-4 px-6 flex justify-end gap-4">
+    <app-button *ngIf="data.declineButton" variant="decline" [config]="data.declineButton" [mat-dialog-close]></app-button>
+    <app-button *ngIf="data.secondaryButton" variant="outlined" [config]="data.secondaryButton"
+      [mat-dialog-close]></app-button>
+    <app-button *ngIf="data.primaryButton" [config]="data.primaryButton"></app-button>
+  </div>
+</app-modal-container>

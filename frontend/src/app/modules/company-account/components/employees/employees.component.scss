@@ -1,0 +1,14 @@
+:host{
+  flex: 1;
+}
+.title-and-button{
+  display: flex;
+  justify-content: space-between;
+}
+.employees-list
+{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+}

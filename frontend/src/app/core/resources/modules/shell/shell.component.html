@@ -1,0 +1,18 @@
+<div *ngIf="isLoggedIn===null" class="flex justify-center items-center h-full">
+    <app-spinner class="loading-container flex-content-center"></app-spinner>
+</div>
+<div class="shell-container overflow-hidden" *ngIf="isLoggedIn===true">
+    <app-menu></app-menu>
+    <div class="main-content overflow-auto flex flex-col">
+        <div class="flex justify-center items-center h-full spinner-container" [style.display]="!(loading | async) ? 'none' : 'flex'">
+            <app-spinner class="loading-container flex-content-center"></app-spinner>
+        </div>
+        <div [style.display]="(loading | async) ? 'none' : 'block'">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+<div>
+    <app-landing-page *ngIf="isLoggedIn === false"></app-landing-page>
+</div>

@@ -1,0 +1,32 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Onboarding/validate-company-form/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Onboarding/validate-company-form/",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Onboarding/register-company/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Onboarding/register-company/",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    }
+  ]
+}

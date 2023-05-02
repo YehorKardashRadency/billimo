@@ -1,0 +1,16 @@
+<app-header [title]="'Invoices'" [icon]="'assets/images/icons/invoices.svg'" [primaryButton]="primaryButton"
+  [secondaryButton]="secondaryButton">
+</app-header>
+
+<app-tabs [showSearch]="true">
+  <app-tab title="Current" [count]="(currentInvoicesLength$ | async) || 0" link="current"></app-tab>
+  <app-tab *ngIf="hasRequestsAccess" title="Requests" [count]="(requestsInvoicesLength$ | async) || 0"
+    link="requests"></app-tab>
+  <app-tab title="Templates" [count]="(templatesLength$ | async) || 0" link="templates"></app-tab>
+  <app-tab title="Archive" link="archive"></app-tab>
+  <app-tab title="Regular" link="regular" [count]="(regularInvoicesLength$ | async) || 0"></app-tab>
+
+  <app-search-input [placeholder]="'Look for an Invoice'" (onSubmit)="newSearch($event)" [style.width]="'340px'"
+    [liveSearch]="true"></app-search-input>
+
+</app-tabs>

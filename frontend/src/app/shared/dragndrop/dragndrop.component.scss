@@ -1,0 +1,36 @@
+span, label, li {
+  color: #70757E;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.upload-icon{
+  pointer-events: none;
+}
+
+.close-icon {
+  margin: 7px;
+}
+
+.upload-container {
+  padding: 20px 16px;
+  height: 108px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #F2F4F8;
+  border-radius: 6px;
+
+  & label, .close-icon {
+    cursor: pointer;
+  }
+
+  & > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 4px;
+  }
+}
+

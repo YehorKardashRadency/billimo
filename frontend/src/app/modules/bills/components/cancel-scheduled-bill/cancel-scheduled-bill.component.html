@@ -1,0 +1,23 @@
+<app-modal-container class="wide-container" *ngIf="!(isLoading$ | async) else loading">
+
+  <h2 class="mb-8" *ngIf="!viewOnly">Bill Cancellation</h2>
+  <h2 class="mb-8" *ngIf="viewOnly">Cancellation Reason</h2>
+
+  <div class="flex flex-col">
+    <label class="text-grey-2 mb-2" *ngIf="!viewOnly" >Cancellation reason</label>
+    <label class="text-grey-2 mb-2" *ngIf="viewOnly && bill.cancellation">{{bill.cancellation.companyName}} cancelled this bill on {{bill.cancellation.cancellationTime | date}} with the message:</label>
+    <textarea cols="5" rows="10" placeholder="Enter your message here" [formControl]="form.controls.reason" [disabled]="viewOnly"></textarea>
+  </div>
+
+  <div class="flex flex-row w-full gap-4 mt-8" *ngIf="!viewOnly">
+    <app-button [config]="closeButtonConfig" variant="decline" class="w-full" (click)="close()"></app-button>
+    <app-button [config]="submitButtonConfig" variant="standard" class="w-full" (click)="onSubmit()"></app-button>
+  </div>
+
+</app-modal-container>
+
+<ng-template #loading>
+  <div class="spinner-container">
+    <app-spinner *ngIf="isLoading$" class="flex items-center"></app-spinner>
+  </div>
+</ng-template>

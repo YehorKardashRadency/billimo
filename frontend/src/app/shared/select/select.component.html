@@ -1,0 +1,6 @@
+<div class="mt-4 grid grid-cols-[40px_1fr] gap-4 p-4 items-center rounded-lg shadow-[0_4px_18px_0px_rgba(173,184,202,0.16)] cursor-pointer"
+     [ngClass]="((selectedItem === item) ? 'choosed' : '')"
+     *ngFor="let item of Items"
+     (click)="choose(item)">
+  <ng-container *ngTemplateOutlet="myTemplate; context: {item}"></ng-container>
+</div>

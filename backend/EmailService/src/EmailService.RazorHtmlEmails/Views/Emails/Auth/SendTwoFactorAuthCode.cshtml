@@ -1,0 +1,14 @@
+﻿@using EmailService.RazorHtmlEmails.Views.Emails.Auth;
+@model TwoFactorAuthCodeViewModel
+
+@{
+    ViewData["EmailTitle"] = "Billimo";
+}
+
+<p style="color: #5f6a6a">
+    Login Confirmation
+</p>
+
+<p style="color: #5f6a6a">
+    Your verification code - <strong>@Model.Code</strong>
+</p>

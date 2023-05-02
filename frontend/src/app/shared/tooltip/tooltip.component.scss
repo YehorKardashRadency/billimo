@@ -1,0 +1,29 @@
+.tooltip {
+  max-width: 250px;
+  position: fixed;
+  background: white;
+  border-radius: 12px;
+  color: #70757E;
+  padding: 16px 20px;
+  font-size: 13px;
+  box-shadow: 0px 4px 30px rgba(59, 80, 117, 0.2);
+  word-break: normal;
+
+  &--visible {
+    opacity: 1;
+    transition: opacity 300ms;
+  }
+
+  &--above {
+    transform:translate(-50%, -100%);
+    margin-bottom: 7px;
+
+    &::before {
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom: none;
+      left: calc(50% - 5px);
+      bottom: -5px;
+    }
+  }
+}

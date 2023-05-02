@@ -1,0 +1,31 @@
+:host{
+  flex: 1;
+}
+.custom-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.item {
+  display: block;
+  border-radius: 8px;
+}
+
+.selected {
+  outline: #0D99FF solid 1px;
+  animation: fade-in 0.5s ease-in-out forwards
+}
+
+@keyframes fade-in {
+  0% {
+    outline-color: rgba(13, 153, 255, 0);
+  }
+  100% {
+    outline-color: rgba(13, 153, 255, 1);
+  }
+}
+
+.payment-methods-container{
+  height: calc(428px - 32px);
+}

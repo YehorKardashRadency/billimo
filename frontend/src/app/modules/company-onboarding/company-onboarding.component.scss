@@ -1,0 +1,14 @@
+.onboarding-page{
+    display: flex;
+    height: 100%;
+    background-color: white;
+    app-about-us{
+        flex: 1 1 580px;
+    }
+    .outlet-container{
+        flex: 1 1 786px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+}

@@ -1,0 +1,37 @@
+.invoices-tab-button
+{
+  width: 154px;
+  height: 56px;
+  border: none;
+  font-size: 20px;
+}
+.wrap-invoices-tabs-and-input
+{
+  display: flex;
+  justify-content: space-between;
+}
+.invoices-tabs
+{
+  display:flex;
+  justify-content: space-around;
+  padding-top:20px;
+}
+.wrap-invoices-tabs
+{
+  background-color: white;
+  height: 60px;
+  text-align: center;
+  width: 60%;
+}
+.invoices-search{
+  height: 65%;
+  width: 50%;
+  border-radius: 20px;
+  text-align: center;
+}
+.wrap-search {
+  flex:1;
+  display: flex;
+  justify-content: flex-end;
+}
+

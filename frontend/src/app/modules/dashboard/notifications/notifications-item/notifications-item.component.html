@@ -1,0 +1,14 @@
+<div *ngIf="notification as item">
+  <div class="flex flex-row justify-between">
+
+    <div class="flex flex-row items-center mr-4">
+      <img [src]="getIconByOperation(item.operation)" class="icon mr-7" alt="icon">
+      <span class="notification-text" [innerHTML]="item.message"> </span>
+    </div>
+
+    <img src="assets/images/icons/target.svg" class="h-min w-min" alt="icon" *ngIf="item.referenceId">
+  </div>
+
+  <p class="info">{{item.date}}</p>
+</div>
+

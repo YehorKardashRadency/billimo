@@ -1,0 +1,173 @@
+<div class="invoice__container" id="export-pdf-id">
+  <header class="invoice__header">
+    <div class="invoice__title">
+      {{title}}
+    </div>
+    <div class="invoice__info">
+      <div class="export-pdf" data-html2canvas-ignore="true">
+        <img src="../../../../../assets/images/icons/export_pdf.svg" alt="export.svg" class="export-pdf-img">
+        <a (click)="ExportPdf()" class="export-pdf-txt">Download PDF</a>
+      </div>
+      <div class="invoice__number">
+        <div>Invoice Number</div>
+        <div>{{invoiceNumber ? (invoiceNumber | convertInvoiceNumber) : "-"}}</div>
+      </div>
+      <div class="invoice__date">
+        <div>Invoice Date</div>
+        <div>{{invoiceDate | date:'shortDate'}}</div>
+      </div>
+    </div>
+  </header>
+  <hr class="divider">
+  <main class="invoice__main">
+    <section class="invoice__companies">
+      <div class="company">
+        <div class="company__title">
+          Company 1
+        </div>
+        <div class="company__info">
+          <div class="info">
+            <div class="title">
+              Company
+            </div>
+            <div class="name" *ngIf="seller$ | async as company">
+              {{company.name}}
+            </div>
+            <div class="name" *ngIf="!seller$">
+              -
+            </div>
+          </div>
+          <div class="info">
+            <div class="title">
+              Address
+            </div>
+            <div class="address" *ngIf="seller$ | async as company">
+              <ng-container *ngIf="company.address!=null">
+
+                {{company.address.country}}, {{company.address.city}}, {{company.address.street}},
+                {{company.address.apartment}}, {{company.address.zipCode}}
+
+              </ng-container>
+            </div>
+            <div class="address" *ngIf="!seller$">
+              -
+            </div>
+          </div>
+          <div class="info">
+            <div class="title">
+              Email
+            </div>
+            <div class="email" *ngIf="seller$ | async as company">
+              {{company.email}}
+            </div>
+            <div class="email" *ngIf="!seller$">
+              -
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="company mr-24">
+        <div class="company__title">
+          Company 2
+        </div>
+        <div class="company__info">
+          <div class="info">
+            <div class="title">
+              Company 2
+            </div>
+            <div class="name">
+              {{buyer?.name ?? '-'}}
+            </div>
+          </div>
+          <div class="info">
+            <div class="title">
+              Address
+            </div>
+            <div class="address">
+              <div *ngIf="buyer?.address">
+                {{buyer?.address?.country}}, {{buyer?.address?.city}}, {{buyer?.address?.street}},
+                {{buyer?.address?.apartment}}, {{buyer?.address?.zipCode}}
+              </div>
+              <div *ngIf="!buyer?.address">
+                -
+              </div>
+            </div>
+          </div>
+          <div class="info">
+            <div class="title">
+              Email
+            </div>
+            <div class="email">
+              {{buyer?.email ?? '-'}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="invoice__items">
+      <div class="table__title">
+        Items
+      </div>
+      <table>
+        <thead>
+        <tr>
+          <th class="text-left text-white">Description</th>
+          <th class="text-center text-white">Quantity</th>
+          <th class="text-right text-white">Unit Price</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="items">
+        <ng-container *ngFor="let item of items">
+          <div class="unit-item nobreak">
+            <tr>
+              <td class="pr-4">{{item.description === '' ? '-' : item.description}}</td>
+              <td class="text-center">{{item.count}}</td>
+              <td class="text-right">{{!item.price ? '0' : item.price}} {{currency}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="font-semibold text-xs">
+                <div class="pb-1">Subtotal</div>
+              </td>
+              <td class="text-xs">
+                <div class="text-right pb-1">{{item.subtotal}} {{currency}}</div>
+              </td>
+            </tr>
+            <div class="line"></div>
+          </div>
+        </ng-container>
+        <div class="unit-item nobreak">
+          <tr class="font-bold text-xs">
+            <td></td>
+            <td>Total</td>
+            <td class="text-right">{{total}} {{currency}}</td>
+          </tr>
+          <tr>
+            <td class="text-xs font-bold ">Additional Notes</td>
+            <td class="font-semibold" colspan="2">{{notes === '' ? 'No additional notes' : notes}}</td>
+          </tr>
+        </div>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer class="invoice__footer mb-8 nobreak">
+    <hr class="divider">
+    <div class="footer__title">
+      Terms and Conditions
+    </div>
+    <ol class="list-decimal">
+      <li>
+        The Vendor shall not be liable to the Buyer directly or indirectly for any loss or damage suffered by the Buyer.
+      </li>
+      <li>
+        The Vendor warrants the service for one (1) year from the date of provision.
+      </li>
+      <li>
+        Any purchase order received by the vendor will be interpreted as accepting this offer and the sale offer in
+        writing. The buyer may purchase the product in this offer only under the Terms and Conditions of the Vendor
+        included in this offer.
+      </li>
+    </ol>
+  </footer>
+</div>

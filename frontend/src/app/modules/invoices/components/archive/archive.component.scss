@@ -1,0 +1,122 @@
+:host{
+  flex:1;
+}
+
+.invoices-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+
+.sort-by-container {
+  display: flex;
+  gap: 15px;
+}
+
+
+.container {
+  margin-bottom: 10px;
+}
+
+.header {
+  display: grid;
+  margin-bottom: 15px;
+  grid-template-columns: repeat(5, 1fr);
+  font-weight: bold;
+  text-align: center;
+
+  & div {
+    text-align: start;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #454950;
+  }
+}
+
+.values {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+
+  & div {
+    display: flex;
+    align-items: center;
+    text-align: start;
+    vertical-align: bottom;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #202123;
+
+  }
+
+  border-bottom: 1px solid #E5E8EC;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  /* Position the top of the element at the vertical center of the container */
+  transform: translateY(-50%);
+  /* Move the element up by half its own height to center it vertically */
+}
+
+.invoice-created-date {
+  font-size: 14px;
+  line-height: 20px;
+  color: #898E96;
+}
+
+.invoice-date-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.empty-invoices-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.empty-invoices__image {
+  margin: auto;
+}
+
+.empty-invoices__text {
+  margin-top: 10px;
+}
+
+.empty-invoices__buttons {
+  margin-top: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.export-button {
+  border-radius: 7px;
+  margin-top: 15px;
+  padding: 8px 32px;
+  gap: 8px;
+  width: 180px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.invoice-amount-currency {
+  margin-left: 10px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #70757E;
+}

@@ -1,0 +1,41 @@
+:host{
+  flex: 1;
+}
+.documents-container{
+  display: flex;
+  flex-direction: row;
+
+  .form-group {
+    &:not(:first-child){
+      margin-top: 1.5rem;
+    }
+  }
+
+  .form-label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.tooltip {
+  text-align: center;
+  color: #898E96;
+  background: #F2F4F8;
+  border-radius: 50%;
+
+  width: 24px;
+  height: 24px;
+
+  margin-left: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.edit {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.error-message > p {
+  color: #ED5252;
+}

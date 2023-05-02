@@ -1,0 +1,32 @@
+<ng-container *ngIf="tabProperty$ | async as tabProperty">
+  <ng-container *ngIf="paymentStatistic$ | async as paymentStatistic">
+    <div class="main">
+
+      <div class="amount-of-bills">
+        <div class="container">
+          <div class="circular-progress"
+            style="--num:{{(paymentStatistic.paid/(paymentStatistic.paid + paymentStatistic.forPayment))*100}};--col:{{getColor(tabProperty.type)}}">
+            <div class="value-container"><img src="../../../../../assets/images/$.svg" alt=""></div>
+          </div>
+        </div>
+
+        <div class="amount-of-bills-text">
+          <p class="txt">Amount of bills sent</p>
+          <p class="money">{{(paymentStatistic.paid + paymentStatistic.forPayment) | currencyFormat}}</p>
+        </div>
+      </div>
+
+      <div class="wand"></div>
+      <div class="paid-txt">
+        <p class="txt">Paid</p>
+        <p class="money">{{ paymentStatistic.paid | currencyFormat  }}</p>
+      </div>
+
+      <div class="wand"></div>
+      <div class="for-payment-txt">
+        <p class="txt">For payment</p>
+        <p class="money">{{paymentStatistic.forPayment | currencyFormat}}</p>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

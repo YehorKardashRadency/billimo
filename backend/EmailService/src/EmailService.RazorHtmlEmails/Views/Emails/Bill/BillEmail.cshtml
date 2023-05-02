@@ -1,0 +1,11 @@
+@using EmailService.RazorHtmlEmails.Views.Emails.Bill
+@model BillEmailViewModel
+
+@{
+    ViewData["EmailTitle"] = "Billimo. You have received an Invoice for " + @Model.Total+" from "+ @Model.SenderName;
+}
+
+<p style="color: #5f6a6a">
+    Billimo is an automated tool that streamlines the invoicing process, making it more efficient and organized. The payment management feature of this software allows customers to pay their bills easily and securely. They can pay their invoices online through a variety of payment options, such as credit card, debit card, or bank transfer. The system is designed to keep customer payment information safe and secure, ensuring that sensitive information is protected at all times.
+    Click the following <a style="text-decoration: underline" href="@Model.InvitationLinkUrl">link</a> to see the details about a received invoice.
+</p>

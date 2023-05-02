@@ -1,0 +1,12 @@
+<app-modal-container>
+    <app-modal-title text="Confirmation dialog"></app-modal-title>
+    <div mat-dialog-content>
+        <p>Lorem ipsum</p>
+    </div>
+    <app-modal-actions-container>
+        <button mat-button class='btn standard'
+        [mat-dialog-close]="false">Cancel</button>
+            <button mat-button class='btn outlined'
+            [mat-dialog-close]="true">Confirm</button>
+    </app-modal-actions-container>
+</app-modal-container>

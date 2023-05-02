@@ -1,0 +1,105 @@
+version: '3.7'
+
+networks:
+  mynetwork:
+
+services:
+  postgres:
+    container_name: 'postgres'
+    image: postgres
+    volumes:
+      - ./pg-init-scripts:/docker-entrypoint-initdb.d
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - mynetwork
+    env_file:
+      - ../.envs/postgres.env
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: on-failure
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - mynetwork
+    env_file:
+      - ../.envs/rabbitmq.env
+
+  api-gateway:
+    container_name: 'api-gateway'
+    image: 'registry.digitalocean.com/billimo/api-gateway'
+    ports:
+      - "7257:7257"
+    networks:
+      - mynetwork
+    env_file:
+      - ../.envs/api-gateway.env
+  
+  administration:
+    container_name: 'administration'
+    image: 'registry.digitalocean.com/billimo/administration'
+    ports:
+      - "7086:7086"
+    networks:
+      - mynetwork
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+    env_file:
+      - ../.envs/administration.env
+
+  invoicing:
+    container_name: 'invoicing'
+    image: 'registry.digitalocean.com/billimo/invoicing'
+    ports:
+      - "7271:7271"
+    networks:
+      - mynetwork
+    depends_on:
+      - "postgres"
+    env_file:
+      - ../.envs/invoicing.env
+
+  email-service:
+    container_name: 'email-service'
+    image: 'registry.digitalocean.com/billimo/email-service'
+    ports:
+      - "7089:7089"
+    networks:
+      - mynetwork
+    depends_on:
+      - "rabbitmq"
+    env_file:
+      - ../.envs/email-service.env
+      
+  payments:
+    container_name: 'payments'
+    image: 'registry.digitalocean.com/billimo/payments'
+    ports:
+      - "7239:7239"
+    networks:
+      - mynetwork
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+    env_file:
+      - ../.envs/payments.env
+
+  frontend:
+    image: 'registry.digitalocean.com/billimo/frontend'
+    container_name: 'frontend'
+    volumes:
+      - ./nginx.production.conf:/etc/nginx/conf.d/default.conf
+    ports:
+       - "80:80"
+    networks:
+      - mynetwork
+
+volumes:
+  db:
+    external: false
+

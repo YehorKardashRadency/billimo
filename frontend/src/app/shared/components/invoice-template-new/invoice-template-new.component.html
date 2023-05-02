@@ -1,0 +1,97 @@
+<div [ngClass]="classList.concat(['mt-8', 'pt-10', 'px-12', 'bg-white'])">
+  <div class="grid grid-cols-[60%_40%]">
+    <div>
+      <h2 class="font-bold text-3xl text-[#454950]">{{ title | uppercase }}</h2>
+    </div>
+    <div class="mt-5">
+      <div class="flex justify-between">
+        <span class="text-xs font-medium text-[#202123]">Invoice Number</span>
+        <span class="text-[10px] font-normal text-[#454950]">{{ invoice.number ? invoice.number : '-'  }}</span>
+      </div>
+      <div class="flex justify-between mt-3">
+        <span class="text-xs font-medium text-[#202123]">Invoice Date</span>
+        <span class="text-[10px] font-normal text-[#454950]">{{ invoice.createdDate ? (invoice.createdDate | date:'shortDate') : '-' }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="h-1 mt-3 bg-[#AFB4BD]"></div>
+  <div class="mt-5 grid grid-cols-[35%_35%] justify-between text-[#202123]">
+    <div>
+      <h4 class="text-base font-medium">Company 1</h4>
+      <div class="mt-6 grid">
+        <span class="text-xs font-medium">Company</span>
+        <span class="text-[10px] mt-1 font-normal text-[#454950]">{{ (!!seller && !!seller.name) ? seller.name : '-' }}</span>
+      </div>
+      <div class="mt-3 grid">
+        <span class="text-xs font-medium">Address</span>
+        <span class="text-[10px] mt-1 font-normal text-[#454950]">{{ (!!seller && !!seller.street) ? companyAddress(seller) : '-' }}</span>
+      </div>
+      <div class="mt-3 grid">
+        <span class="text-xs font-medium">Email</span>
+        <span class="text-[10px] mt-1 font-normal text-[#454950]">{{ (!!seller && !!seller.email) ? seller.email : '-' }}</span>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-base font-medium">Company 2</h4>
+      <div class="mt-6 grid">
+        <span class="text-xs font-medium">Company</span>
+        <span class="text-[10px] mt-1 font-normal text-[#454950]">{{ (!!buyer && !!buyer.name) ? buyer.name : '-' }}</span>
+      </div>
+      <div class="mt-3 grid">
+        <span class="text-xs font-medium">Address</span>
+        <span class="text-[10px] mt-1 font-normal text-[#454950]">{{ (!!buyer && !!buyer.street) ? companyAddress(buyer) : '-' }}</span>
+      </div>
+      <div class="mt-3 grid">
+        <span class="text-xs font-medium">Email</span>
+        <span class="text-[10px] mt-1 font-normal text-[#454950]">{{ (!!buyer && !!buyer.email) ? buyer.email : '-' }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="mt-12">
+    <h4 class="text-base font-medium">Items</h4>
+    <div class="mt-2 h-[50px] bg-[#454950] text-xs font-semibold flex justify-between items-center p-3">
+      <span class="text-white">Description</span>
+      <span class="text-white">Quantity</span>
+      <span class="text-white">Unit Price</span>
+    </div>
+    <div class="mt-4 text-[#454950] text-[10px] font-normal grid grid-cols-3 justify-between items-center"
+      *ngFor="let item of invoice.items">
+      <span>{{ item.description }}</span>
+      <span class="justify-self-center"> {{ item.count }}</span>
+      <span class="justify-self-end">{{ item.price | currency : invoice.currency }}</span>
+    </div>
+    <div class="mt-4 h-px bg-[#E5E8EC]"></div>
+    <div class="w-[60%] ml-auto mt-4 text-[#454950] text-[10px]">
+      <div class="flex justify-between">
+        <span class="font-semibold">Subtotal</span>
+        <span class="font-normal">{{ invoice.total | currency : invoice.currency }}</span>
+      </div>
+      <div class="mt-1 flex justify-between">
+        <span class="font-semibold">Tax</span>
+        <span class="font-normal">$0.00</span>
+      </div>
+      <div class="mt-3 h-px bg-[#E5E8EC]"></div>
+      <div class="mt-3 text-xs font-semibold flex justify-between">
+        <span>Total</span>
+        <span>{{ invoice.total | currency : invoice.currency }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="h-px mt-3 bg-[#E5E8EC]"></div>
+  <div class="mt-8 grid grid-cols-[40%_60%] text-[#454950] font-semibold items-center">
+    <span class="text-xs">Additional notes</span>
+    <div class="h-full text-[10px]">{{ !!invoice.notes ? invoice.notes : 'No additional notes' }}</div>
+  </div>
+  <div *ngIf="showTermsAndConditions">
+    <div class="mt-20 bg-[#AFB4BD] h-1"></div>
+    <div class="mt-4 text-[10px] text-[#454950]">
+      <span class="font-semibold">Terms and Conditions</span>
+      <ol class="list-decimal mt-1 font-normal ml-3">
+        <li>The Vendor shall not be liable to the Buyer directly or indirectly for any loss or damage suffered by the Buyer.</li>
+        <li>The Vendor warrants the service for one (1) year from the date of provision.</li>
+        <li>Any purchase order received by the vendor will be interpreted as accepting this offer and the sale offer in writing. The buyer may purchase the product in this offer only under the Terms and Conditions of the Vendor included in this offer.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+

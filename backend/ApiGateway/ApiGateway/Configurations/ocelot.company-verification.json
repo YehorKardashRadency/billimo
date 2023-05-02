@@ -1,0 +1,19 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/CompanyVerification/verify/{companyId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Administration}",
+          "Port": 7086
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/CompanyVerification/verify/{companyId}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "UpstreamHttpMethod": [
+        "Put"
+      ]
+    }
+  ]
+}

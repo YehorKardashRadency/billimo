@@ -1,0 +1,9 @@
+<div class="counter flex justify-between">
+  <button [ngClass]="value <= 1 ? 'counter__button minus disabled' : 'counter__button minus'"
+    [disabled]="value <= 1"
+    (click)="decremnet()">-</button>
+  <p class="counter__number">
+    {{value}}
+  </p>
+  <button class="counter__button plus" (click)="incremnet()">+</button>
+</div>

@@ -1,0 +1,34 @@
+<div class="verification-page-container">
+    <app-form-container title="Verify your company" [formGroup]="form">
+        <h3>Verify your company</h3>
+        <div class="my-5">
+            <app-progress-bar [progress]="0.3"></app-progress-bar>
+        </div>
+        <div class="input-row">
+            <p class="text-grey-2">Business Type</p>
+            <app-dropdown [items]="businessTypes" [formControl]="getFormControl('businessType')"  >
+            </app-dropdown>
+            <app-generic-error-message [control]="form.controls['businessType']"></app-generic-error-message>
+        </div>
+        <div class="input-row">
+            <div class="flex justify-between items-center">
+                <span class="text-ablue">Verify your company now</span>
+                <label class="switch">
+                    <input type="checkbox" (change)="onCompanyVerificationChange($event)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="text-grey-2 text-sm input-row">
+            You will need to upload your company documents for verification later from your Company account. Until your company is verified, you will not be able to create invoices, receive or send bills.
+        </div>
+        <div class="flex justify-between gap-5">
+            <app-button text="Back" class="flex-1" variant="outlined" (onClick)="goBack()"></app-button>
+            <app-button text="Next" class="flex-1" (onClick)="onSubmit()"></app-button>
+        </div>
+        <p class="login-suggestion">
+            <span>Already have an account?</span>
+            <a href="/login">Login</a>
+        </p>
+    </app-form-container>
+</div>

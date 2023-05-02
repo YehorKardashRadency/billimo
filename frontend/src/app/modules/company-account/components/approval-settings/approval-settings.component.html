@@ -1,0 +1,28 @@
+<div class="approval-container">
+  <h3 class="mb-7">Approval settings</h3>
+
+  <div class="form-group">
+    <div class="form-group__input">
+      <label class="mr-3">Approval required for paying invoices higher than</label>
+      <app-input placeholder="$" [currencyConfig]="currencyMaskConfig" [displayClearButton]="false" [control]="form.controls.payingInvoicesThreshold"></app-input>
+    </div>
+
+    <app-switch #payingCheckbox (change)="setPayingCheckbox(payingCheckbox.checked)" [control]="form.controls.onPayingInvoicesHigherThan"></app-switch>
+  </div>
+
+  <div class="form-group">
+    <div class="form-group__input">
+      <label>Approval required for sending invoices higher than</label>
+      <app-input placeholder="$" [currencyConfig]="currencyMaskConfig" [displayClearButton]="false" [control]="form.controls.sendingInvoicesThreshold"></app-input>
+    </div>
+
+    <app-switch #sendingCheckbox (change)="setSendingCheckbox(sendingCheckbox.checked)" [control]="form.controls.onSendingInvoicesHigherThan"></app-switch>
+  </div>
+
+  <div class="form-group">
+    <label>Approval required for sending all invoices</label>
+    <app-switch #globalCheckbox (change)="setGlobalCheckbox(globalCheckbox.checked)" [control]="form.controls.onSendingAllInvoices"></app-switch>
+  </div>
+
+</div>
+

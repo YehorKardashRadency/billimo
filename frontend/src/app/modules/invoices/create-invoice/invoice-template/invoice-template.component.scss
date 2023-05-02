@@ -1,0 +1,164 @@
+.invoice__container{
+  color: #202123;
+  min-height: 968px;
+  width: 684px;
+  padding: 39px 49px;
+  background-color: #FFFF;
+}
+.invoice{
+  &__header{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title {
+    height: 44px;
+    width: 117px;
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: 0em;
+    text-align: left;
+    text-transform: uppercase;
+    color: #454950;
+  }
+  &__info {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    margin-top: 19px;
+  }
+  &__number, &__date {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  &__companies {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 21px;
+    margin-bottom: 36px;
+  }
+}
+
+.divider{
+  height: 4px;
+  background: #AFB4BD;
+}
+
+.footer__title {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  color: #454950;
+}
+
+.invoice__footer {
+  margin-top: 24px;
+}
+
+ol{
+  margin-left: 12px;
+  font-size: 10px;
+  line-height: 16px;
+  color: #454950;
+}
+
+.invoice__main {
+  margin-bottom: 77px;
+}
+
+.company {
+  width: 140px;
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 24px;
+  }
+  & .title {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+  & .name, & .address, & .email {
+    font-family: Inter;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #454950;
+  }
+
+}
+
+.table__title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  margin-bottom: 8px;
+}
+.info{
+  margin-bottom: 12px;
+}
+
+table{
+  width: 100%;
+}
+
+thead{
+  color: #FFF;
+  background-color: #454950;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  height: 50px;
+  padding: 16px 0px ;
+}
+
+tr {
+  border-bottom: 1px solid #E5E8EC;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+
+th{
+  padding: 0px 16px;
+}
+
+td{
+  padding: 16px 0px;
+  font-size: 10px;
+  line-height: 16px;
+}
+.invoice__number
+{
+  margin-top: 20px;
+}
+.export-pdf
+{
+  display: flex;
+  cursor: pointer;
+  justify-content: end;
+}
+.export-pdf-img
+{
+  margin-right: 16px;
+}
+.export-pdf-txt
+{
+  color: #0D99FF;
+}
+.nobreak {
+  page-break-inside: avoid;
+  height: 100%;
+}
+.unit-item
+{
+  display: contents;
+}
+.line
+{
+  height: 1px;
+  color: black;
+}

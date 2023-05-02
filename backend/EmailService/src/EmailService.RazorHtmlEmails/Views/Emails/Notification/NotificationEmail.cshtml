@@ -1,0 +1,14 @@
+@using EmailService.RazorHtmlEmails.Views.Emails.Notification
+@model NotificationEmailViewModel
+
+@{
+    ViewData["EmailTitle"] = "Billimo. You have received new notification";
+}
+
+<p style="color: #5f6a6a">
+    @Model.Message  
+</p>
+<p style="color: #5f6a6a">
+   <a href="@Model.DashboardUrl">See details</a>
+</p>
+

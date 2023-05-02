@@ -1,0 +1,15 @@
+<app-modal-container maxHeight="640px" maxWidth="684px">
+  <app-spinner *ngIf="!bill$"></app-spinner>
+  <div class="invoice overflow-y-auto overflow-x-hidden" *ngIf="bill$ | async as bill">
+    <app-invoice-template-new [title]="data.title"
+      [invoice]="bill.invoice"
+      [buyer]="bill.buyer"
+      [seller]="bill.seller"></app-invoice-template-new>
+  </div>
+  <div class="pt-4 px-6 flex justify-end gap-4">
+    <app-button *ngIf="data.declineButton" variant="decline" [config]="data.declineButton"></app-button>
+    <app-button *ngIf="data.secondaryButton" variant="outlined" [config]="data.secondaryButton"
+      [mat-dialog-close]></app-button>
+    <app-button *ngIf="data.primaryButton" [config]="data.primaryButton"></app-button>
+  </div>
+</app-modal-container>

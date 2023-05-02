@@ -1,0 +1,24 @@
+button{
+    min-width: 116.25px;
+    background-color: var(--grey7);
+    border-right: 1px;
+    border-style: solid;
+    border-color: var(--grey5);
+    color: var(--grey1);
+}
+
+.active{
+    background-color: var(--grey4);
+    color: white;
+}
+
+.first{
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.last{
+    border-style: none;   
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}

@@ -1,0 +1,51 @@
+<div class="list-conteiner h-full w-full">
+
+    <div class="header h-10 flex">
+        <h3>Sent bills</h3>
+        <app-filter-button-set [set]="filterSet" (currentFilter)="changeFilter($event)"></app-filter-button-set>
+    </div>
+
+    <app-table-header [cells]="headerCells" (headerEvent)="headerClick($event)" class="operations-spacer"></app-table-header>
+
+    <div class="h-full w-full" *ngIf="(billsWithPagination$ | async) as vm">
+        <div class="scroll-conteiner h-full w-full">
+            <div class="bill-conteiner h-full w-full">
+                <app-table-row *ngFor="let row of vm.items; index as i" [data]="row" [cells]="headerCells"
+                    [rowIndex]="i" (rowEvent)="rowClick($event)" >
+
+                  <ng-template let-rowOperation #operation>
+                    <div class="operations">
+                      <div *ngIf="rowOperation.status == 'Scheduled'">
+                        <button mat-icon-button [matMenuTriggerFor]="cancelMenu" (click)="selectBil(row)" class="cursor-pointer">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                      </div>
+                      <div *ngIf="rowOperation.status == 'Cancelled'">
+                        <button mat-icon-button [matMenuTriggerFor]="showReasonMenu" (click)="selectBil(row)" class="cursor-pointer">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                </app-table-row>
+            </div>
+        </div>
+
+        <app-pagination *ngIf="vm.totalPages > 1 && (pageSize$ | async) as pageSize" [totalCount]="vm.totalCount" [pageSize]="pageSize"
+            [currentPage]="vm.pageNumber" (onPageChange)="toPage($event)"></app-pagination>
+    </div>
+</div>
+
+<mat-menu #cancelMenu="matMenu" class="menu-content">
+  <button mat-menu-item class="menu-item" (click)="cancel()">
+    <img class="menu-item-icon" src="../../../../../assets/images/icons/invoice_delete.svg" alt="" />
+    Cancel
+  </button>
+</mat-menu>
+
+<mat-menu #showReasonMenu="matMenu" class="menu-content">
+  <button mat-menu-item class="menu-item" (click)="cancel()">
+    Cancellation Reason
+  </button>
+</mat-menu>

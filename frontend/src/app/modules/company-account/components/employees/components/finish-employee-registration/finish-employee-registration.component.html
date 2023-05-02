@@ -1,0 +1,66 @@
+<div class="grid grid-cols-[42%_58%] h-full" *ngIf="(invitedEmployee$ | async) as employee">
+  <app-about-us></app-about-us>
+  <div class="flex justify-center items-center bg-white">
+    <div class="w-[45%]">
+      <h2 class="font-medium text-2xl text-[#202123]">Welcome, {{ employee.firstName }} {{ employee.lastName }}!</h2>
+      <p class="mt-1 font-normal text-sm text-[#898E96]">
+        You are about to join the {{ employee.companyName }}.
+      </p>
+
+      <form class="mt-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="relative">
+          <app-input
+            [label]="'Your one time password'"
+            placeholder="Password"
+            type="password"
+            [control]="getFormControl('oneTimePassword')">
+          </app-input>
+          <span class="absolute top-0 left-[45%] text-center text-[#898E96] bg-[#F2F4F8] rounded-full w-[24px] h-[24px] ml-[10px]
+          inline-block cursor-pointer" tooltip="Enter a password that was sent to your email">?</span>
+        </div>
+        <app-generic-error-message [control]="getFormControl('oneTimePassword')"></app-generic-error-message>
+
+        <div class="mt-4">
+          <app-input
+            [label]="'Create a new password'"
+            placeholder="Create password"
+            type="password"
+            [control]="getFormControl('newPassword')">
+          </app-input>
+          <app-generic-error-message [control]="getFormControl('newPassword')"></app-generic-error-message>
+        </div>
+
+        <div class="mt-4 ml-[20px]">
+          <ul class="list-disc text-[#64C68D] text-sm font-normal">
+            <li>Password must be at least 8 characters long</li>
+            <li>English keyboard type</li>
+            <li>Uppercase and lowercase letters</li>
+            <li>Password must include at least 1 number</li>
+          </ul>
+        </div>
+
+        <div class="mt-8 grid grid-cols-[24px_1fr] gap-x-2 text-[#454950]">
+          <input class="h-[24px] w-full border-[#1EA0EF]" type="checkbox" [formControl]="getFormControl('terms')"/>
+          <label class="text-[#454950] text-base">I agree to <a
+            class="underline cursor-pointer">Terms and Conditions</a> and <br>
+            <a class="underline cursor-pointer">Privacy Policy</a>
+          </label>
+        </div>
+        <app-generic-error-message [control]="getFormControl('terms')"></app-generic-error-message>
+
+        <div class="mt-3" *ngIf="(registrationError$ | async) as error">
+          <app-generic-error-message *ngIf="form?.valid" [message]="error"></app-generic-error-message>
+        </div>
+
+        <div class="flex justify-center">
+          <app-button
+            [classList]="['mt-8']"
+            type="submit"
+            text="Log in"
+            [disabled]="!form.valid">
+          </app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

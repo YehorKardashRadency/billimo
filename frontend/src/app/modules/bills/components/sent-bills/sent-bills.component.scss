@@ -1,0 +1,40 @@
+:host{
+    flex: 1 1 auto;
+}
+
+.list-conteiner{
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    flex: 0 0 auto;
+    align-items: center;
+    h3{
+        flex: 1 1 auto;
+    }
+}
+
+.scroll-conteiner{
+    position: relative;
+    height: calc(100% - 44px);
+}
+
+.bill-conteiner{
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.menu-item-icon {
+  display: inline-block;
+}
+
+.operations{
+  width: 90px;
+}
+
+.operations-spacer{
+  margin-right: 90px;
+}

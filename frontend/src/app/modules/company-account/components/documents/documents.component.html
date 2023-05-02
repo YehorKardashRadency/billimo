@@ -1,0 +1,93 @@
+<div class="flex flex-row justify-between items-center">
+  <h3>General</h3>
+  <app-button [config]="config" variant="standard" (click)="onSubmit()" [disabled]="!canEdit"></app-button>
+</div>
+
+<form [formGroup]="form" [encoding]="form">
+  <div class="documents-container">
+      <div class="w-1/2 mr-8">
+
+        <div class="form-group">
+          <div class="form-label">
+            <label class="text-grey-2">Company name</label>
+            <span class="tooltip" tooltip="Enter your company name exactly as it appears on official documents">?</span>
+          </div>
+          <app-input placeholder="Company name" [control]="form.controls.name"></app-input>
+          <app-generic-error-message [control]="form.controls.name"></app-generic-error-message>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <label class="text-grey-2">Email</label>
+            <span class="tooltip" tooltip="Please enter a valid email address. Make sure it's an email address you check frequently">?</span>
+          </div>
+
+          <app-input placeholder="Email" [control]="form.controls.email"></app-input>
+          <app-generic-error-message [control]="form.controls.email"></app-generic-error-message>
+        </div>
+
+        <div class="form-group" [hidden]="!showDragnDrop()">
+          <div class="form-label">
+            <label class="text-grey-2">Company logo</label>
+            <span class="tooltip" tooltip="Upload your company logo in SVG format to help build brand recognition and establish a professional image">?</span>
+          </div>
+          <app-dragndrop [formControl]="form.controls.logoFile" #logoDragndrop (change)="onChangeLogo($event)" [accept]="accept"></app-dragndrop>
+          <div *ngIf="form.controls.logoFile && form.controls.logo && (form.controls.logoFile.dirty || form.controls.logoFile.touched)"
+               class="error-message w-full help-text">
+            <p *ngIf="form.controls.logo.errors && form.controls.logo.errors['required'] && !form.controls.logoFile.errors">This field is required</p>
+            <p *ngIf="form.controls.logoFile.errors && form.controls.logoFile.errors['invalidFilesize']">One or more files are larger than 2 MB</p>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="!showDragnDrop()">
+          <div class="form-label">
+            <label class="text-grey-2">Company logo</label>
+            <span class="tooltip" tooltip="Upload your company logo in SVG format to help build brand recognition and establish a professional image">?</span>
+          </div>
+          <div class="flex flex-row justify-between items-start">
+            <img [src]="toSafeUrl()" alt="preview" width="80" height="80"/>
+            <div class="flex flex-row items-center cursor-pointer" (click)="logoDragndrop.click()" *ngIf="canEdit">
+              <img src="assets/images/icons/edit.svg" alt="edit" class="mr-2" width="20" height="20">
+              <span class="text-grey-2 edit">Edit</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="w-1/2">
+        <div class="form-group">
+          <div class="form-label">
+            <label class="text-grey-2">Business type</label>
+            <span class="tooltip" tooltip="Select the type of business that best describes your company. This helps us understand your industry and tailor our services to your needs">?</span>
+          </div>
+          <app-dropdown class="text-grey-2" [items]="businessTypes" [placeholder]="'Business type'"
+                        [formControl]="form.controls.businessType"></app-dropdown>
+          <app-generic-error-message [control]="form.controls.businessType"></app-generic-error-message>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <label class="text-grey-2">Tax or VAT number</label>
+            <span class="tooltip" tooltip="This number is used to identify your business for tax purposes and must be accurate to ensure proper filing of tax returns">?</span>
+          </div>
+          <app-input [control]="form.controls.tax" placeholder="Tax or VAT number"></app-input>
+          <app-generic-error-message [control]="form.controls.tax"></app-generic-error-message>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <label class="text-grey-2 mt-6">Company registration number</label>
+            <span class="tooltip" tooltip="This is the unique number assigned to your company when it was registered with the government">?</span>
+          </div>
+          <app-input [control]="form.controls.registration" placeholder="Registration number"></app-input>
+          <app-generic-error-message [control]="form.controls.registration"></app-generic-error-message>
+        </div>
+
+      </div>
+  </div>
+</form>
+
+<ng-template #templateRef>
+  <app-approval-settings></app-approval-settings>
+</ng-template>

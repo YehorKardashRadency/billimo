@@ -1,0 +1,15 @@
+<app-header [title]="'Bill Payments'" [icon]="'assets/images/icons/bill_payments.svg'">
+  <app-button *ngIf="activeTabIndex == 0 && (selectAll$ | async) == true" (onClick)="exportAll()">Export</app-button>
+  <app-button *ngIf="activeTabIndex == 0 && (selectAll$ | async) == false" (onClick)="exportSelected()">Export</app-button>
+  <app-button *ngIf="activeTabIndex == 1" (onClick)="payTheBill()" [disabled]="(selectedReceivedBillId$ | async) === 0 ">Pay the bill</app-button>
+</app-header>
+
+<app-tabs [showSearch]="true" [height]="'70vh'"  (activeTabChange) = "activeTabChange($event)">
+  <app-tab title="Sent bills" [count]="sentBillsCount$ | async" link="sent"></app-tab>
+  <app-tab title="Received bills" [count]="receivedBillsCount$ | async" link="received"></app-tab>
+  <app-tab *ngIf="hasRequestsAccess"  title="Requests" [count]="requestsTotalCount$ | async" link="requests"></app-tab>
+  <app-search-input [color]="'#FFFFFF'" (onSubmit)="newSearch($event)" [liveSearch]="true"
+    [placeholder]="'Look for a bill'"></app-search-input>
+</app-tabs>
+
+<app-payment-statistic></app-payment-statistic>

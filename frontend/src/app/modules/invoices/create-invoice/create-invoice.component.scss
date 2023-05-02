@@ -1,0 +1,60 @@
+.invoice__form{
+  width: 600px;
+  min-height: 1426px;
+}
+
+.divider{
+  border-bottom: 1px solid #E5E8EC;
+}
+
+.company__deatils{
+  color: #0D99FF;
+}
+
+.relative{
+  width: 59px;
+  height: 34px;
+}
+
+.text{
+  color: #70757E;
+  margin-bottom: 8px;
+  margin-top: 14px;
+}
+
+.help__text{
+  font-size: 14px;
+  line-height: 20px;
+  color: #70757E;
+}
+
+.text-end{
+  font-size: 16px;
+  line-height: 24px;
+}
+
+:host ::ng-deep .currency .input-field{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.error-message{
+  color: #ED5252;
+}
+
+.currency__value{
+  background-color: #F2F4F8;
+  color: #AFB4BD;
+  border-radius: 6px 0px 0px 6px;
+  padding: 8px 16px;
+}
+
+.template{
+  box-shadow: 0px 4px 18px 0px #ADB8CA29;
+}
+
+.is-regular-container{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

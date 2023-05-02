@@ -1,0 +1,46 @@
+.wide-container {
+  width: 492px;
+  min-height: 400px;
+  display: block;
+}
+
+.spinner-container{
+  width: 492px;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+textarea {
+  color: #454950;
+  background: #F2F4F8;
+  border-radius: 6px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+textarea:hover:enabled textarea:hover {
+  border: 1px #CAD0D9 solid;
+}
+
+textarea::placeholder{
+  color: #AFB4BD;
+  opacity: 1;
+}
+
+textarea:focus {
+  color: #454950;
+}
+
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+textarea {
+  -moz-appearance: textfield;
+}

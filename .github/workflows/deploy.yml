@@ -1,0 +1,72 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Build the system
+      - name: Build system for production
+        run: |
+          cd scripts/
+          chmod +x ./build-system.production.sh
+          ./build-system.production.sh
+          
+      # Install the doctl CLI tool
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      # Get access to DigitalOcean Container Registry
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 3000
+
+      # Push images
+      - name: Push images to a container registry
+        run: |
+          cd scripts/
+          chmod +x ./push-to-registry.production.sh
+          ./push-to-registry.production.sh
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Copy Docker Compose, Nginx config files, and pg-init-scripts to the server
+      - name: Copy files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+          source: "scripts/docker-compose.production.yml, scripts/nginx.production.conf, scripts/pg-init-scripts/"
+          target: /home/user/app/
+          strip_components: 1
+
+      # SSH into the server and run Docker Compose
+      - name: Deploy with Docker Compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/user/app/
+            mv ./docker-compose.production.yml ./docker-compose.yml
+            docker-compose pull
+            docker-compose up -d

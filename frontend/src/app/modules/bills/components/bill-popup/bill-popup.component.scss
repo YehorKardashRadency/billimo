@@ -1,0 +1,18 @@
+.modal {
+  max-height: 640px;
+  max-width: 684px;
+  border-radius: 12px;
+}
+
+.invoice {
+  max-height: 512px;
+}
+
+.btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-dialog-container {
+  border-radius: 12px;
+}

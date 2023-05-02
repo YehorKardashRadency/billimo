@@ -1,0 +1,55 @@
+
+.main-block
+{
+  margin-top:40px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom-color: cornflowerblue;
+  border-bottom-width: 1px;
+  padding-bottom: 15px;
+  align-items: center;
+}
+.icon-and-info
+{
+  width: 40%;
+  display: flex;
+}
+.image
+{
+  margin-right: 20px;
+}
+.link{
+  color: cornflowerblue;
+
+  text-decoration: underline;
+}
+.role-and-arrow
+{
+  display: flex;
+  color:#64C68D;
+  //styleName: Body text;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+}
+.choose
+{
+  color: deepskyblue;
+  display: flex;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.circle
+{
+  margin-right:10px;
+}
+.no-choose
+{
+  cursor: default;
+}
+
+
+
+
+

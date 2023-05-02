@@ -1,0 +1,42 @@
+<div class="w-full relative" style="background-color: white;">
+  <button type="button" (click)="openSelectList()" class="dropdown w-full cursor-pointer py-1.5 pl-2 pr-10 text-left">
+    <div class="flex items-center">
+      <span class="change__text font-normal ml-3 block">Sort by</span>
+      <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+        <img *ngIf="!isSelectListOpen" src="../../../../assets/images/down.svg" alt="">
+        <img *ngIf="isSelectListOpen" src="../../../../assets/images/up.svg" alt="">
+      </span>
+    </div>
+  </button>
+
+  <div class="items mt-2 w-full overflow-auto absolute z-10" *ngIf="isSelectListOpen ">
+    <ul class="w-full">
+      <li class="cursor-pointer select-none">
+        <div class="flex items-center" (click)="updateList('Name (A-Z)')"
+          [ngClass]="value === 'Name (A-Z)'? 'selected':''">
+          Name (A-Z)
+        </div>
+      </li>
+      <li class="cursor-pointer select-none">
+        <div class="flex items-center" (click)="updateList('Name (Z-A)')"
+          [ngClass]="value === 'Name (Z-A)'? 'selected':''">
+          Name (Z-A)
+
+        </div>
+      </li>
+      <li class="cursor-pointer select-none">
+        <div class="flex items-center" (click)="updateList('From recent to old')"
+          [ngClass]="value === 'From recent to old'? 'selected':''">
+          From recent to old
+        </div>
+      </li>
+      <li class="cursor-pointer select-none">
+        <div class="flex items-center" (click)="updateList('From old to recent')"
+          [ngClass]="value === 'From old to recent'? 'selected':''">
+          From old to recent
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</div>

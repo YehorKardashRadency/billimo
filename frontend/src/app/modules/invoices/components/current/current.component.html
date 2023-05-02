@@ -1,0 +1,35 @@
+<app-invoices-table-wrapper [isLoading]="isLoading" title="Current"
+  subTitle="Regular payments or current invoices (waiting for sending)" *ngIf="!isEmpty">
+  <div class="">
+    <app-table-header [cells]="headerCells" (headerEvent)="headerClick($event)"></app-table-header>
+    <div *ngIf="invoices$ | async as invoices" class="w-full justify-between items-center">
+      <app-table-row *ngFor="let row of invoices; index as i" [data]="row" [cells]="headerCells" [rowIndex]="i"
+        (rowEvent)="rowClick($event)">
+      </app-table-row>
+    </div>
+  </div>
+</app-invoices-table-wrapper>
+<div *ngIf="isEmpty && !isLoading" class="empty-invoices-container">
+  <div>
+    <img class="empty-invoices__image" src="../../../../../assets/images/icons/empty_icon.svg" alt="">
+    <p class="empty-invoices__text">You have no templates. Let’s create one.</p>
+    <div class="empty-invoices__buttons">
+      <app-button *ngIf="secondaryButton" [config]="secondaryButton" variant="outlined"></app-button>
+      <app-button *ngIf="primaryButton" [config]="primaryButton"></app-button>
+    </div>
+  </div>
+</div>
+<mat-menu #menu="matMenu" class="menu-content">
+  <button mat-menu-item class="menu-item">
+    <img class="menu-item-icon" src="../../../../../assets/images/icons/invoice_support.svg" alt="">
+    Support/FAQs
+  </button>
+  <button mat-menu-item class="menu-item" (click)="onArchiveClick()">
+    <img class="menu-item-icon" src="../../../../../assets/images/icons/invoice_move-to-archieve.svg" alt="">
+    Move to archive
+  </button>
+  <button mat-menu-item class="menu-item" (click)="onDeleteClick()">
+    <img class="menu-item-icon" src="../../../../../assets/images/icons/invoice_delete.svg" alt="" />
+    Delete
+  </button>
+</mat-menu>

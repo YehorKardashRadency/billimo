@@ -1,0 +1,8 @@
+<label class="switch">
+  <input type="checkbox" *ngIf="control" #checkbox
+         [formControl]="control"
+         (change)="onChange($event)"
+         [attr.disabled]="disabled ? true : null"
+  >
+  <span class="slider round"></span>
+</label>

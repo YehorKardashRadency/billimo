@@ -1,0 +1,383 @@
+
+<div class="wrapper">
+    
+    
+    <div style="position: relative;" class="t">
+        <!-- <img class="background" src="" alt=""> -->
+        <div class="header-container">
+            <div class="logo">
+                <img class="logo__image" src="../../../../assets/images/billimo-title-header.png" alt="">
+            </div>
+        
+            <div class="options-container">
+                <div class="options">
+                    <button class="option" (click)="scrollIntoSection('how-it-works-section')">
+                        How it works
+                    </button>
+                    <button class="option" (click)="scrollIntoSection('win-win-section')">
+                        Advantages
+                    </button>
+                    <button class="option"  (click)="scrollIntoSection('footer-section')">
+                        Contacts
+                    </button>
+                </div>
+        
+                <div class="auth">
+                    <button class="inline-button button__log-in" (click)="router.navigateByUrl('login')">Log in</button>
+                    <button class="button button__register" (click)="router.navigateByUrl('/company-onboarding')">Register</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="landing-container">
+            <div class="landing-text inner">
+                <h1 class="main-phrase">
+                    <span class="white">One platform for all your  </span> 
+                    <span class="blue">invoice management.</span>
+                    <br>
+                    <img class="main-line" src="../../../assets/images/landing-images/line.svg" alt="">
+                </h1>
+                <div class="main-text">
+                    The intelligent way to create and pay bills, send invoices, 
+                    and get paid. Less clunky <br> processes, more time for your customers.
+                     Get started with Billimo, <b style="color:white; font-weight:500"> an expertly <br> designed system to accelerate your ambition.</b>
+                </div>
+        
+                <button class="button__register get-started" (click)="router.navigateByUrl('/company-onboarding')">Get started</button>
+            </div>
+            <div class="inner full-heigth">
+                <div class="landing-images">
+                    <div class="popup1">
+                        <img src="../../../assets/images/landing-images/popup1.png"/>
+                    </div>
+                    <div  class="popup2">
+                        <img src="../../../assets/images/landing-images/popup2.png"/>
+                    </div>
+            
+                    <div class="popup3">
+                        <img src="../../../assets/images/landing-images/popup3.png" alt="">
+                    </div>
+    
+                </div>
+                <div class="advantages-container">
+                    <div class="advantage-container">
+                       <span class="advantage">
+                            41% increase in average order value
+                       </span> 
+                    </div>
+                    <div class="advantage-container">
+                        <span  class="advantage">
+                            30% increase in conversion
+                       </span> 
+                    </div>
+                    <div class="advantage-container">
+                        <span  class="advantage">
+                            Up to 40% of Billimo sales come from new customers
+                       </span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-container">
+            <div class="quote-content">
+                <div class="quote-text">
+                    <img class="qoute-image" src="../../../assets/images/landing-images/quote.svg" alt="">
+                    What if you could manage your invoices with everything you need 
+                    in one place? Billimo has helped 2000+ companies successfully
+                     organize and run faster than they ever dreamt – all thanks in
+                    large part to their unmatched customer service approach that can’t be beaten!
+                    <div class="quote-customer">
+                        -Happy customer
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="usage-container">
+        <h1 class="usage-title">How leading companies use Billimo</h1>
+        <p class="usage-info">
+            With Billimo, you get it all. We’re invoice management
+            with direct connections to your favorite payment methods.
+            Customize your team,<b>improve your documentation speed and set your terms with Billimo.</b>
+        </p>
+        <div class="usage-options-container">
+            <div class="top-container">
+                <div class="option__generate-and-approve">
+                    <div class="title_1">
+                        <img src="../../../assets/images/landing-images/layer_1.svg"
+                        alt="" >
+                    </div>
+                    <div class="option-info">
+                        <h3>Generate and approve invoices</h3>
+                        <p class="option__text large">
+                            Upload or create invoices directly in
+                            the system. Use templates, check your
+                            current invoices, receive notifications
+                            – all in one place. <br>
+                            Everything is under your control.
+                            You set up your team, approve large
+                            payments or work done.
+                        </p>
+                    </div>
+                </div>
+                <div class="rigth-container">
+                    <div class="option__accelerate-sales">
+                        <h3>Accelerate Sales Cycle</h3>
+                        <div class="flex-gap">
+                            <p class="option__text">
+                                Offer your customers convenient
+                                terms of payment and their
+                                favorite payment methods.
+                                You no longer have to wait for
+                                money or chase after customers.
+                                We manage everything for your business.
+                            </p>
+                            <img src="../../../assets/images/landing-images/layer_2.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="option__handle-hard-stuff">
+                        <h3>We’ll handle the hard stuff</h3>
+                        <div class="flex-gap">
+                            <p  class="option__text">
+                                Let us cover KYB and all the other three-letter
+                                compliance terms while you focus on growing
+                                your business.
+                            </p>
+                            <img src="../../../assets/images/landing-images/layer_3.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="option__pay">
+                <h3>Pay how you want to pay</h3>
+                <p class="option__text small">
+                    Pay and get paid faster with a wide variety
+                    of flexible payment options, including ACH,
+                    bank account, and international wire. <br>
+                    See payments coming and going at a glance
+                    with a simple dashboard overview.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="how-it-works-container" id="how-it-works-section">
+        <h1>How it works</h1>
+        <p class="how-it-works-text">
+            Easy and friendly <span style="color:#0D99FF"> invoice management </span>
+            and transparent <br>
+            payment process.
+        </p>
+        <div class="flex">
+            <div class="features-list-container">
+                <div class="feature-container">
+                    <h3>
+                        1. Onboard & go
+                    </h3>
+                    <p>
+                        Easy onboard companies with KYB services. Be sure that your
+                        <br> vendors and customers are verified and trustworthy.
+                    </p>
+                </div>
+                <div class="feature-container">
+                    <h3>
+                        2. Secure invoice creation and approvement
+                    </h3>
+                    <p>
+                        Billimo invoice management is a convenient, safe, & cost-
+                        <br> efficient way to manage your financial documentation. You
+                        <br> can track every transaction and bill.
+                    </p>
+                </div>
+                <div class="feature-container">
+                    <h3>
+                        3. Offer speed & choice
+                    </h3>
+                    <p>
+                        Get multiple payment options and fast & flexible payment
+                        <br> terms. Direct connections to payment networks significantly
+                        <br> expand your payment capabilities.
+                    </p>
+                </div>
+                <div class="feature-container">
+                    <h3>
+                        4. Track your payments & get paid
+                    </h3>
+                    <p>
+                        Check all your transactions with a glance. Get paid the full
+                        <br> contract value the next business day, while your customer
+                        <br> pays us monthly.
+                    </p>
+                </div>
+                <button class="button__register" (click)="router.navigateByUrl('/company-onboarding')">Get started</button>
+            </div>
+            <div class="features-inner">
+                <div class="image1">
+                    <img src="../../../assets/images/landing-images/popup1.png"/>
+                </div>
+                <div class="image2">
+                    <img src="../../../assets/images/landing-images/create-invoice.png"/>
+                </div>
+                <div class="image3">
+                    <img src="../../../assets/images/landing-images/dashbord-bright.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="win-win-container" id="win-win-section">
+        <h1 class="win-win-title">No more compromise. <br>
+            Choose a <span class="blue"> win-win</span> option.
+        </h1>
+
+        <div class="win-win-content">
+            <div class="win-win-cell">
+                <h2 class="cell-title">
+                    What’s in it for your customers?
+                </h2>
+                <img class="win-win-image" src="../../../assets/images/landing-images/left-cell.png" alt="">
+                <ul class="win-win-list">
+                    <li>
+                        Quick and easy access to the bill and payment
+                    </li>
+                    <li>
+                        Improved cash flow by spreading out large payments
+                    </li>
+                    <li>
+                        Extended runway, freeing up cash to reinvest in their business
+                    </li>
+                </ul>
+            </div>
+            <div class="win-win-cell">
+                <h2 class="cell-title">
+                    What’s in it for your business?
+                </h2>
+                <img class="win-win-image" src="../../../../assets/images/landing-images/rigth-cell.png" alt="">
+                <ul class="win-win-list">
+                    <li>
+                        Close more deals by removing cost barriers
+                    </li>
+                    <li>
+                        Get paid upfront and offload billing
+                    </li>
+                    <li>
+                        Billimo assumes risk of non-payment
+                    </li>
+                    <li>
+                        Easy documentation processes, more time for your customers.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="what-we-do-container">
+        <div class="what-we-do-info">
+            <h1 class="margin:0">What we do for you</h1>
+            <button class="button__register" (click)="router.navigateByUrl('company-onboarding')">Get started</button>
+        </div>
+        <div class="what-we-do-list">
+            <div class="what-we-do-item">
+                <img src="../../../../assets/images/landing-images/what-we-do-1.png" alt="">
+                <span>
+                    <br> Effective invoice management. We
+                    <br> manage all billing
+                </span>
+            </div>
+
+            <div class="what-we-do-item">
+                <img src="../../../../assets/images/landing-images/what-we-do-2.png" alt="">
+                <span>
+                    <br> Automatically generate invoices and
+                    <br> bills, upload invoices or export.
+                </span>
+            </div>
+
+            <div class="what-we-do-item">
+                <img src="../../../../assets/images/landing-images/what-we-do-3.png" alt="">
+                <span>
+                    <br>  Integrate with your accounting software:
+                    <br> quickbooks.
+                </span>
+            </div>
+
+            <div class="what-we-do-item">
+                <img src="../../../../assets/images/landing-images/what-we-do-4.png" alt="">
+                <span>
+                   <br> Manage your company account, create
+                    <br> new team members, and add your
+                    <br> favorite payment methods.
+                </span>
+            </div>
+
+            <div class="what-we-do-item">
+                <img src="../../../../assets/images/landing-images/what-we-do-5.png" alt="">
+                <span>
+                    <br> Our team will support and assist your
+                    <br> customers throughout the onboarding
+                    <br> process, as needed.
+                </span>
+            </div>
+
+
+            <div class="what-we-do-item">
+                <img src="../../../../assets/images/landing-images/what-we-do-6.png" alt="">
+                <span>
+                    <br> No further action needed from you or
+                    <br> your customer.
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="footer" id="footer-section">
+        <div class="footer-row">
+            <div>
+                <img src="../../../../assets/images/billimo-title-header.png" alt="">
+            </div>
+            <div class="options">
+                <button class="option">
+                    How it works
+                </button>
+                <button class="option">
+                    Advantages
+                </button>
+                <button class="option">
+                    Contacts
+                </button>
+                <div>
+                    <button class="button__register" (click)="router.navigateByUrl('company-onboarding')">Get started</button>
+                </div>
+            </div>
+        </div>
+        <div class="contact-info">
+            <div>
+                contact@billimo.com
+                <br/>
+                +1 (718) 123-4567
+            </div>
+        </div>
+        <hr/>
+        <div class="bottom-row">
+            <div class="options margin-top">
+                <button class="option">
+                    Terms of Service
+                </button>
+                <button class="option">
+                    Privacy Policy
+                </button>
+                <button class="option">
+                    © 2023 Billimo.com
+                </button>
+            </div>
+            <div class="social-networks">
+                <img src="../../../../assets/images/landing-images/facebook-icon.png" alt="">
+                <img src="../../../../assets/images/landing-images/linkedin-icon.png" alt="">
+
+            </div>
+        </div>
+    </div>
+</div>

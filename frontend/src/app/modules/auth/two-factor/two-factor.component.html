@@ -1,0 +1,27 @@
+<div class="two-factor-container">
+  <h3 class="mb-2">Authenticate Your Account</h3>
+  <p class="help-text pb-8">
+    Protecting your account is our top priority. Please confirm your account by entering the authorization code sent to your e-mail.
+  </p>
+
+  <app-one-time-code [formControl]="form.controls.code"></app-one-time-code>
+
+  <p class="error-message" *ngFor="let error of errors$ | async">{{ error }}</p>
+
+  <p class="help-text pt-8">
+    It may take a minute to receive your code. Haven’t received it?
+    <a class="link" (click)="resendCode()">Resend a new code.</a>
+  </p>
+
+  <div class="flex flex-row w-full pt-8">
+    <app-button [config]="backButton" variant="outlined" class="mr-4 w-1/2" (click)="onBack()"></app-button>
+    <app-button [disabled]="submitDisabled" [config]="submitButton" class="w-1/2" (click)="onSubmit()"></app-button>
+  </div>
+
+  <div class="pt-8">
+    Don’t have an account?
+    <a class="register-link ml-4" [routerLink]="'/company-onboarding'">Register</a>
+  </div>
+
+</div>
+

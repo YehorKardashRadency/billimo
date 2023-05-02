@@ -1,0 +1,84 @@
+<nav class="menu__container px-8 py-12 bg-white flex flex-col justify-between h-full">
+  <div class="px-4">
+    <div class="pb-12">
+      <img src="assets/images/billimo-title-header.png" alt="Logo">
+    </div>
+    <ul class="menu__links">
+      <li>
+        <app-menu-link [route]="'/dashboard'"
+          [options]="true"
+          [linkTitle] = "'Dashboard'"
+          [icon]="'/assets/images/icons/dashboard.svg'"
+          ></app-menu-link>
+      </li>
+      <li>
+        <app-menu-link [route]="'/invoices'"
+          [options]="false"
+          [linkTitle] = "'Invoices'"
+          [icon]="'/assets/images/icons/invoices.svg'"
+          ></app-menu-link>
+      </li>
+      <li>
+        <app-menu-link [route]="'/bills'"
+          [options]="false"
+          [linkTitle] = "'Bill Payments'"
+          [icon]="'/assets/images/icons/bill_payments.svg'"
+          ></app-menu-link>
+      </li>
+      <li>
+        <app-menu-link [route]="'#'"
+          [options]="false"
+          [linkTitle] = "'Report'"
+          [icon]="'/assets/images/icons/report_icon.svg'"
+          ></app-menu-link>
+      </li>
+    </ul>
+  </div>
+  <hr class="w-full mt-6">
+  <div class="px-4 pb-12 mt-12">
+    <div class="flex flex-col">
+      <div class="account__icon w-10 h-10 rounded-full flex items-center justify-center mb-2" *ngIf="userInfo$ | async as vm">
+        <img src="/assets/images/icons/avatar.svg" alt="avatar" *ngIf="!vm.avatar">
+        <img [src]="vm.avatar" alt="avatar" *ngIf="vm.avatar">
+      </div>
+      <div class="text-base font-medium mb-2">
+        <ng-container *ngIf="userInfo$ | async as user; else loadingError">
+         {{user.firstName + " " + user.lastName}}
+        </ng-container>
+      </div>
+      <div class="text-sm mb-6">
+        <ng-container *ngIf="userInfo$ | async as user; else loadingError">
+          {{user.companyName}}
+         </ng-container>
+      </div>
+    </div>
+    <ul class="menu__links">
+        <li>
+          <app-menu-link [route]="'/company'"
+              [options]="false"
+              [linkTitle] = "'Company Account'"
+              [icon]="'assets/images/icons/company_account_icon.svg'"
+          ></app-menu-link>
+        </li>
+        <li>
+          <app-menu-link [route]="'/settings'"
+              [options]="false"
+              [linkTitle] = "'Settings'"
+              [icon]="'assets/images/icons/settings_icon.svg'"
+          ></app-menu-link>
+        </li>
+        <li>
+          <app-menu-link
+              (linkClicked)="logout()"
+              [options]="true"
+              [linkTitle] = "'Logout'"
+              [icon]="'assets/images/icons/logout_icon.svg'"
+          ></app-menu-link>
+        </li>
+      </ul>
+  </div>
+</nav>
+
+<ng-template #loadingError>
+  Loading error
+</ng-template>

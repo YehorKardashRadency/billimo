@@ -1,0 +1,65 @@
+:host {
+  flex: 1;
+}
+
+.templates-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3% 1.5%
+}
+
+.templates-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+
+.preview-image {
+  
+  border: 1px solid #E5E8EC;
+  filter: drop-shadow(0px 4px 12px rgba(92, 104, 124, 0.16));
+  border-radius: 8px;
+}
+.preview-container{
+  height: 240px;
+  width: 170px;
+  cursor: pointer;
+}
+.actions{
+  opacity: 0;
+  transition:opacity 0.3s linear;
+}
+.preview-container:hover .actions{
+  opacity: 1;
+}
+
+.name {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 0.5em;
+}
+.empty-invoices-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.empty-invoices__image {
+  margin: auto;
+}
+
+.empty-invoices__text {
+  margin-top: 10px;
+}
+
+.empty-invoices__buttons {
+  margin-top: 10%;
+  display: flex;
+  justify-content: space-between;
+}

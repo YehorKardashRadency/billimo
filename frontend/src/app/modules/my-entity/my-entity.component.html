@@ -1,0 +1,7 @@
+<div>My Entity</div>
+
+<p *ngIf="data$ | async as data">{{data.name}}</p>
+
+<my-entity-detail *ngIf="detail$ | async as detail"
+  [detail]="detail">
+</my-entity-detail>

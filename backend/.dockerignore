@@ -1,0 +1,7 @@
+**/.gitignore
+**/.vscode
+**/.idea
+**/obj
+**/bin
+**/out
+

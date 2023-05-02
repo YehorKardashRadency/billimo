@@ -1,0 +1,268 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/CompanyAccount/{companyId}/employees",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/employees/company/{companyId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/currentcompanyinfo",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/currentcompanyinfo",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/getcompanies",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/getcompanies",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Company/addresses",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/adresses",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Company/address/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/adress",
+      "UpstreamHttpMethod": [
+        "Put",
+        "Post"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Company/address/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/adress/{id}",
+      "UpstreamHttpMethod": [
+        "Delete"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Company/address/toggle/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/address/toggle/{id}",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/getcompanydetails/{companyId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/getcompanydetails/{companyId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/documents",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Companies/companies-info",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/documents",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/documents",
+      "UpstreamHttpMethod": [ "Get", "Put" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/approvalsettings",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+         "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/approvalsettings",
+      "UpstreamHttpMethod": [ "Get", "Put" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Company/{companyId}/get-plaid-data",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/Company/{companyId}/get-plaid-data",
+      "UpstreamHttpMethod": ["Get"],
+      "DangerousAcceptAnyServerCertificateValidator": true
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/company/check-on-duplicate-email/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host":"{Administration}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/company/check-on-duplicate-email/",
+      "UpstreamHttpMethod": ["Get"],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    }
+  ]
+}

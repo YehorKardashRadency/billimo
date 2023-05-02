@@ -1,0 +1,12 @@
+<div class="main-content-header">
+    <div class="header-name flex flex-row">
+        <img src="{{icon}}" alt="">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="header-actions">
+        <ng-content></ng-content>
+        <app-button *ngIf="secondaryButton" [config]="secondaryButton" variant="outlined"></app-button>
+        <app-button *ngIf="primaryButton"[config]="primaryButton" 
+        [disabled]="!(companyVerification$! | async)"></app-button>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<ng-container>
+  <div class="flex justify-between items-center">
+    <h3>Addresses</h3>
+    <app-button text="Add a new address" (onClick)="opendAddModal()" [disabled]="!canEdit"></app-button>
+  </div>
+  <div class="p-6" class="divide-y divide-grey-6">
+    <div *ngFor="let address of addresses$ | async" class="py-8" >
+      <div class="flex justify-between mb-6">
+        <span class="font-medium">{{address.title}}</span>
+        <div class="flex items-center hover:cursor-pointer" (click)="openEditModal(address)">
+          <img src="assets/images/icons/pencil.svg" alt="" class="m-2">
+          <span class="text-grey-3 help-text">Edit</span>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between gap-4 mb-4">
+            <div class="flex-1">
+              <p class="text-grey-2">Country</p>
+              <app-input [defaultValue]="address.country" placeholder="Country" [disabled]="true"></app-input>
+            </div>
+            <div class="flex-1">
+              <p class="text-grey-2">City</p>
+              <app-input [defaultValue]="address.city" placeholder="City" [disabled]="true"></app-input>
+            </div>
+        </div>
+        <div class="gap-4 mb-4">
+          <div class="w-full">
+            <p class="text-grey-2">Street</p>
+            <app-input [defaultValue]="address.street" placeholder="Street" [disabled]="true"></app-input>
+          </div>
+      </div>
+        <div class="flex justify-between gap-4 mb-4">
+          <div class="flex-1">
+            <p class="text-grey-2">Apartment(optional)</p>
+            <app-input [defaultValue]="address.apartment" placeholder="Enter Apartment" [disabled]="true"></app-input>
+          </div>
+          <div class="flex-1">
+            <p class="text-grey-2">Zip code</p>
+            <app-input [defaultValue]="address.zipCode" placeholder="Zip code" [disabled]="true"></app-input>
+          </div>
+      </div>
+      <div class="flex gap-6 items-center">
+        <span class="font-medium text-ablue">Use this adress as default</span>
+        <app-switch [checked]="defaultAddressId==address.id"
+         (change)="toggleDefaultAddress($event,address.id!)" 
+         [disableUncheck]="true"
+         [disabled]="!canEdit"></app-switch>
+      </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

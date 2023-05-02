@@ -1,0 +1,21 @@
+<div class="flex flex-row items-center" *ngIf="transaction as item">
+  <img [src]="item.icon" class="icon mr-4" alt="icon" width="48" height="48">
+
+  <div class="company-with-date">
+    <span class="company-name">{{item.company}}</span>
+    <span class="info">{{item.date}}</span>
+  </div>
+
+
+  <span class="rounded-2xl h-min py-1 px-2 whitespace-nowrap" [ngClass]="item.amount >= 0 ? 'positive' : 'negative'">
+    {{item.amount >= 0 ? '+' : '-'}}
+    ${{ (item.amount >= 0 ? item.amount : -item.amount) | number : '.2'}}
+  </span>
+
+  <div class="w-24 ml-4 flex justify-around">   
+    <span class="rounded-2xl h-min py-1 px-2 whitespace-nowrap" [ngClass]="statusType">
+      {{ statusName }}
+    </span>
+  </div>
+
+</div>

@@ -1,0 +1,53 @@
+<app-modal-container>
+    <app-modal-title [text]="editMode ? 'Edit an address' : 'Add an address'"></app-modal-title>
+    <div mat-dialog-content>
+        <div class="mb-4">
+            <app-input type="text" placeholder="New Address" [control]="getFormControl('title')"
+                [defaultValue]="data.address.title" label="Address title"></app-input>
+            <app-generic-error-message [control]="form.controls['title']"></app-generic-error-message>
+        </div>
+        <div class="mb-4">
+            <app-dropdown [items]="countries" [formControl]="getFormControl('country')" label="Country"
+                [defaultValue]="data.address.country!='' ? data.address.country : undefined"></app-dropdown>
+            <app-generic-error-message [control]="form.controls['country']"></app-generic-error-message>
+        </div>
+        <div class="mb-4">
+            <app-input type="text" placeholder="Kyiv" [control]="getFormControl('city')" label="City"
+                [defaultValue]="data.address.city"></app-input>
+            <app-generic-error-message [control]="form.controls['city']"></app-generic-error-message>
+        </div>
+        <div class="mb-4">
+            <app-input type="text" placeholder="Enter Street" [control]="getFormControl('street')"
+                [defaultValue]="data.address.street" label="Street"></app-input>
+            <app-generic-error-message [control]="form.controls['street']"></app-generic-error-message>
+        </div>
+        <div class="flex gap-10">
+            <div class="mb-4">
+                <app-input type="text" placeholder="Enter apartment" [control]="getFormControl('apartment')"
+                    label="Apartment (optional)" [defaultValue]="data.address.apartment"></app-input>
+                <app-generic-error-message [control]="form.controls['apartment']"></app-generic-error-message>
+            </div>
+            <div class="mb-4">
+                <app-input type="text" placeholder="00000" [control]="getFormControl('zipCode')" label="Zip Code"
+                    [defaultValue]="data.address.zipCode"></app-input>
+                <app-generic-error-message [control]="form.controls['zipCode']"></app-generic-error-message>
+            </div>
+        </div>
+        <div class="mb-4">
+            <div class="flex justify-between items-center">
+                <span class="font-medium text-ablue">Use this adress as default</span>
+                <app-switch 
+                [disabled]="data.defaultAddressId==data.address.id"
+                [checked]="data.defaultAddressId==data.address.id" 
+                [control]="getFormControl('isDefault')"></app-switch>
+            </div>
+        </div>
+    </div>
+    <app-modal-actions-container>
+        <button *ngIf="!editMode" mat-button class='btn outlined flex-1 mx-4' [mat-dialog-close]>Cancel</button>
+        <button *ngIf="editMode" mat-button class='btn outlined error flex-1 mx-4' (click)="onDelete()" 
+        [disabled]="data.defaultAddressId==data.address.id">Delete
+            address</button>
+        <button mat-button class='btn standard flex-1 mx-4' (click)="onSubmit()">{{editMode ? 'Save' : 'Add' }}</button>
+    </app-modal-actions-container>
+</app-modal-container>

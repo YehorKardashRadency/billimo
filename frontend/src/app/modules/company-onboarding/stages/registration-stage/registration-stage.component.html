@@ -1,0 +1,56 @@
+<app-form-container>
+    <h1>Registration</h1>
+    <div class="input-row">
+        <p>Company name</p>
+        <app-input type="text" placeholder="ABC Company" [control]="getFormControl('companyName')"></app-input>
+        <app-generic-error-message [control]="form.controls['companyName']"></app-generic-error-message>
+        <ng-container *ngIf="serverErrors$|async as serverErrors">
+           <app-generic-error-message *ngIf="serverErrors['CompanyName']" [message]="serverErrors['CompanyName'][0]"></app-generic-error-message>
+        </ng-container>
+    </div>
+    <div class="input-row">
+        <p>Company email</p>
+        <app-input type="text" placeholder="example@companyname.com" [control]="getFormControl('email')"
+          [disabled]="!!this.route.snapshot.queryParams['email']"></app-input>
+        <app-generic-error-message [control]="form.controls['email']"></app-generic-error-message>
+        <ng-container *ngIf="serverErrors$|async as serverErrors">
+            <app-generic-error-message  *ngIf="serverErrors['Email']" [message]="serverErrors['Email'][0]"></app-generic-error-message>
+         </ng-container>
+    </div>
+    <div class="input-row">
+        <p>Name and Surname</p>
+        <app-input type="text" placeholder="Name and Surname" [control]="getFormControl('name')"></app-input>
+        <app-generic-error-message [control]="form.controls['name']"></app-generic-error-message>
+        <ng-container *ngIf="serverErrors$|async as serverErrors">
+            <app-generic-error-message *ngIf="serverErrors['FirstName']" [message]="serverErrors['FirstName'][0]"></app-generic-error-message>
+            <app-generic-error-message *ngIf="serverErrors['LastName']" [message]="serverErrors['LastName'][0]"></app-generic-error-message>
+         </ng-container>
+    </div>
+    <div class="input-row">
+        <p>Create password</p>
+        <app-input type="password" placeholder="Create password" [control]="getFormControl('password')"></app-input>
+        <app-generic-error-message [control]="form.controls['password']"></app-generic-error-message>
+        <ng-container *ngIf="serverErrors$|async as serverErrors">
+            <app-generic-error-message *ngIf="serverErrors['Password']" [message]="serverErrors['Password'][0]"></app-generic-error-message>
+         </ng-container>
+    </div>
+    <ul class="input-row password-tips">
+        <li>
+            Password must be at least 8 characters long
+        </li>
+        <li>
+            English keyboard type
+        </li>
+        <li>
+            Uppercase and lowercase letters
+        </li>
+        <li>
+            Password must include at least 1 number
+        </li>
+    </ul>
+    <app-button text="Next" class="next-button" (onClick)="onSubmit()"></app-button>
+    <p class="login-suggestion">
+        <span>Already have an account?</span>
+        <a href="/login">Login</a>
+    </p>
+</app-form-container>

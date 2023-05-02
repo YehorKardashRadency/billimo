@@ -1,0 +1,8 @@
+<div class="digits-container">
+  <input #input type="text" maxlength="1" class="input-field"
+         *ngFor="let item of [1,2,3,4,5,6]"
+         placeholder="_"
+         (input)="sanitizeInput($event)" (paste)="onPaste($event)">
+</div>
+
+

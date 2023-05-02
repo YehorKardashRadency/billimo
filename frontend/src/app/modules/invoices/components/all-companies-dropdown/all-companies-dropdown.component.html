@@ -1,0 +1,50 @@
+<div class="w-full relative box-border" style="background-color: white;">
+  <button type="button" (click)="openSelectList()" class="dropdown w-full cursor-pointer py-1.5 pl-2 pr-10 text-left">
+    <div class="flex items-center">
+      <span class="change__text font-normal ml-3 block">{{value}}</span>
+      <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+        <img *ngIf="!isSelectListOpen" src="../../../../assets/images/down.svg" alt="">
+        <img *ngIf="isSelectListOpen" src="../../../../assets/images/up.svg" alt="">
+      </span>
+    </div>
+  </button>
+
+  <div class="items mt-2 w-full overflow-auto absolute z-10 right-0" *ngIf="isSelectListOpen">
+    <div class="w-full">
+      <div class="cursor-pointer select-none flex" (click)="updateList(undefined)">
+        <div class="flex items-center m-4 w-full" [ngClass]="keyEqual('All companies') ? 'selected' : ''">
+          <div>
+            <span [ngClass]="keyEqual('All companies')  ? 
+                'selected-company-name' : 'company-name'">
+              All Companies
+            </span>
+            <p class="company-invoices">
+              {{allCompaniesCount$|async}} invoices
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <div class="cursor-pointer select-none flex" *ngFor="let item of currentInvoicesByCompany$ | async | keyvalue"
+        (click)="updateList(item.key)">
+        <div class="flex items-center m-4 w-full" [ngClass]="keyEqual(item.key) ? 'selected' : ''">
+          <div>
+            <img *ngIf="hasLogo(item.key)" class="inline-block w-10 h-10"
+              [src]="'data:image/png;base64,' + getLogo(item.key)" />
+          </div>
+          <div>
+            <span [ngClass]="keyEqual(item.key)  ? 
+                'selected-company-name' : 'company-name'">
+              {{getName(item.key)}}
+            </span>
+            <p class="company-invoices">
+              {{item.value}} invoices
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

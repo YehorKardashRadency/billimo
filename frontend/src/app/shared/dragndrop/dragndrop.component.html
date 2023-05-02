@@ -1,0 +1,29 @@
+<div class="upload-container"
+     (drop)="onDrop($event)"
+     (dragover)="onDragOver($event)">
+
+  <input class="hidden" #fileInput
+         (input)="onInput($event)"
+         (click)="onInputClick($event)"
+         [multiple]="multiple"
+         type="file"
+         accept="{{accept}}"/>
+
+  <div *ngIf="!this.files">
+    <img src="assets/images/icons/upload.svg" alt="upload" width="24" height="24" class="upload-icon" (dragstart)="false">
+    <span>Drag & drop to upload or
+      <br><label class="underline" (click)="click()">Browse file</label>
+    </span>
+  </div>
+
+  <div *ngIf="this.files">
+    <ul>
+      <li *ngFor="let file of fileNames">
+        {{file}}
+      </li>
+    </ul>
+
+    <img src="assets/images/icons/close.svg" width="10" height="10" class="close-icon" (click)="onClear()" alt="clear">
+  </div>
+</div>
+

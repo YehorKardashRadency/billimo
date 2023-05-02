@@ -1,0 +1,186 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/bill/{billId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bills/{billId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/BillPayment/payment-statistic?tabType={tabType}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Payments}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bill-payment/payment-statistic?tabType={tabType}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Invoice/send-bill/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/send-bill/{id}",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/bill/{all}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bill/{all}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/bills/requests",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bills/requests",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/bill/create/request",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bills/create/request",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/bill/approve/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bills/approve/{id}",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/bill/decline/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/bills/decline/{id}",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    }
+  ]
+}

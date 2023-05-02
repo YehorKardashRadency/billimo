@@ -1,0 +1,8 @@
+<app-modal-container maxWidth="500px" [showClose]="false">
+    <app-modal-success text="Our team is looking forward to verifying your company. We will reach out to you within 24 hours.
+    You can already check your Dashboard." title="Thank you!"></app-modal-success>
+    <app-modal-actions-container>
+            <app-button text="Go to dashboard" variant="standard"
+            [mat-dialog-close]="'../../dashboard'"></app-button>
+    </app-modal-actions-container>
+</app-modal-container>

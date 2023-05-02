@@ -1,0 +1,14 @@
+<a
+  routerLink="{{route}}"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: options }"
+  (isActiveChange)="onRouterLinkActive()"
+  (mouseover) ="mouseOver()"
+  (mouseleave) = "mouseLeave()"
+  (click)="onClick()">
+  <i class="icon" style="
+  mask-image:url({{icon}});
+  -webkit-mask-image: url({{icon}});
+  "></i>
+  {{linkTitle}}
+</a>

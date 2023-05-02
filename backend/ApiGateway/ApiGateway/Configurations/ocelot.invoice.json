@@ -1,0 +1,274 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/invoice/ToArchive/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/toarchive/{id}",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/create-or-edit",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/create-or-edit",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/accept/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/accept/{id}",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/decline/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/decline/{id}",
+      "UpstreamHttpMethod": [
+        "Put"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/send/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/send/{id}",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/current",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/current",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/regular",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/regular",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/archived",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/archived",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/templates",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/templates",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/requests",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/requests",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "AddHeadersToRequest": {
+        "claim_id": "Claims[id] > value",
+        "claim_sub": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value",
+        "claim_role": "Claims[http://schemas.microsoft.com/ws/2008/06/identity/claims/role] > value",
+        "claim_companyid": "Claims[companyid] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/delete/{invoiceId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/delete/{invoiceId}",
+      "UpstreamHttpMethod": [
+        "Delete"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/invoice/invoice-number",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "{Invoicing}"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/invoice/invoice-number",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    }
+  ]
+}
