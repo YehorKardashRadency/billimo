@@ -3,7 +3,7 @@ from decimal import Decimal
 import attr
 
 from app.infra.celery import BaseEvent, celery, MessageTypes, publish
-from app.infra.queues import Queues
+from app.infra.celery.queues import Queues
 
 
 @attr.s(auto_attribs=True)
@@ -16,4 +16,4 @@ class BillNotificationEvent(BaseEvent):
 
 @celery.task(name='send_bill_notification')
 def send_bill_notification(event: BillNotificationEvent):
-    publish(Queues.bill_notification_queue, MessageTypes.BILL_NOTIFICATION, event)
+    publish(Queues.BILL_NOTIFICATION_QUEUE, MessageTypes.BILL_NOTIFICATION, event)
