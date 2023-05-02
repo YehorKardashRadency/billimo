@@ -9,5 +9,6 @@ def publish(queue: str, message_type: list[str], event: BaseEvent):
     with celery.connection() as connection:
         producer = Producer(connection)
         message = MessageEnvelope(message_type=message_type, message=event).__dict__
+        print("Sending message ", message)
         producer.publish(message, exchange=exchange, routing_key='')
 

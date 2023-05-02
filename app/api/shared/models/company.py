@@ -14,6 +14,8 @@ class Company(Model, SurrogatePK):
 
     bill_cancellations = db.relationship('BillCancellation', back_populates='company')
 
-    def __init__(self, name, ref_id):
+    def __init__(self, name, ref_id, id=None):
+        if id is not None:
+            self.id = id
         self.name = name
         self.ref_id = ref_id

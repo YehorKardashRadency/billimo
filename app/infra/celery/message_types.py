@@ -14,3 +14,7 @@ class MessageTypes:
         "urn:message:EventBus.Messages.Events:UpdatePaymentStatisticEvent",
         "urn:message:EventBus.Messages.Events:IntegrationBaseEvent"
     ]
+    UPDATE_BUYER_STATISTIC = [
+        "urn:message:EventBus.Messages.Events:UpdateBuyerStatisticEvent",
+        "urn:message:EventBus.Messages.Events:IntegrationBaseEvent"
+    ]
