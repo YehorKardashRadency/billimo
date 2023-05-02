@@ -1,3 +1,5 @@
+import json
+
 from flask import request, jsonify, Response
 from flask_restx import Resource
 
@@ -14,6 +16,10 @@ from .use_cases.get_last_invoice_number import GetLastInvoiceNumberRequest, GetL
 from .use_cases.list_invoices import ListInvoicesRequest, ListInvoicesUseCase
 from .use_cases.send_invoice import SendInvoiceRequest, SendInvoiceUseCase
 from ..shared.presenter import Presenter
+from .validators import invoice_schema
+from cerberus import Validator
+
+from ...common.exceptions import ValidationException
 
 uc_change_status = ChangeApprovalStatusUseCase()
 uc_create_invoice = CreateInvoiceUseCase()
@@ -33,7 +39,11 @@ class Create(Resource):
     @invoices_ns.expect(invoice_dto_in)
     def post(self):
         data = request.json
-        # TODO add validation
+
+        v = Validator(invoice_schema)
+        if not v.validate(data):
+            raise ValidationException(errors=v.errors)
+
         uc_create_request = CreateInvoiceRequest(invoice=data)
         response_create = uc_create_invoice.execute(uc_create_request)
         self._create_presenter.handle(response_create)

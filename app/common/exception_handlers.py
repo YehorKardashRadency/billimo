@@ -1,6 +1,7 @@
 from werkzeug.exceptions import BadRequest, NotFound, Conflict, Unauthorized, Forbidden
 
 from app.api import api
+from app.common.exceptions import ValidationException
 
 
 @api.errorhandler(BadRequest)
@@ -11,6 +12,16 @@ def handle_bad_request_error(error):
         'message': error.description,
     }
     return response, error.code
+
+
+@api.errorhandler(ValidationException)
+def handle_bad_request_error(error: ValidationException):
+    response = {
+        'status': BadRequest.code,
+        'title': 'Validation error',
+        'message': error.errors,
+    }
+    return response, BadRequest.code
 
 
 @api.errorhandler(NotFound)

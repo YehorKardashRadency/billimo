@@ -1,3 +1,4 @@
+from cerberus import Validator
 from flask import request, jsonify, Response
 from flask_restx import Resource
 
@@ -10,6 +11,9 @@ from .use_cases.list_bills import ListBillsRequest, ListBillsUseCase, BillType
 from .use_cases.cancel_bill import CancelBillRequest, CancelBillUseCase
 from ..shared.presenter import Presenter
 from .models.dto import CancelBillDTO
+from .validators import bill_statuses_schema, bill_id_schema, bill_cancellation_schema
+from ...common import ValidationException
+
 uc_list_bills = ListBillsUseCase()
 uc_get_by_id = GetBillByIdUseCase()
 uc_change_status = ChangeBillStatusUseCase()
@@ -108,7 +112,12 @@ class CreateBillRequest(Resource):
     _presenter = Presenter()
 
     def put(self):
-        id = request.json['billId']
+        data = request.json
+        v = Validator(bill_id_schema)
+        if not v.validate(data):
+            raise ValidationException(errors=v.errors)
+
+        id = data.json['billId']
         uc_request = ChangeBillStatusRequest(
             bill_id=id,
             approval_status=ApprovalStatus.Pending
@@ -124,6 +133,11 @@ class MarkBillAs(Resource):
 
     def put(self):
         data = request.json
+
+        v = Validator(bill_statuses_schema)
+        if not v.validate(data):
+            raise ValidationException(errors=v.errors)
+
         uc_request = ChangeBillStatusMultipleRequest(
             bill_ids=data['bills'],
             approval_status=ApprovalStatus[data['status']]
@@ -172,12 +186,17 @@ class DeclineBill(Resource):
         return Response(status=200)
 
 
-@bills_ns.route('/cancel/<int:id>')
+@bills_ns.route('/cancel/')
 class CancelBill(Resource):
     _presenter = Presenter()
 
     def put(self):
         data = request.json
+
+        v = Validator(bill_cancellation_schema)
+        if not v.validate(data):
+            raise ValidationException(errors=v.errors)
+
         uc_request = CancelBillRequest(
             cancel_bill_dto=CancelBillDTO(**data)
         )
