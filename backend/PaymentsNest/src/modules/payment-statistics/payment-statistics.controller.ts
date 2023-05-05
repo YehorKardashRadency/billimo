@@ -1,6 +1,12 @@
-import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
-import { PaymentStatisticsService } from './payment-statistics.service';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  ParseIntPipe,
+  Query,
+} from '@nestjs/common';
 import { TabType } from './entities/tab-type.enum';
+import { PaymentStatisticsService } from './payment-statistics.service';
 
 @Controller('BillPayment')
 export class PaymentStatisticsController {
@@ -8,14 +14,14 @@ export class PaymentStatisticsController {
     private readonly paymentStatisticsService: PaymentStatisticsService
   ) {}
   @Get('payment-statistic')
-  async getPaymentStatistics(@Query('tabType') tabTypeQuery: string) {
-    const tabType = TabType[tabTypeQuery];
+  async getPaymentStatistics(
+    @Query('tabType', ParseIntPipe) tabTypeQuery: number
+  ) {
+    const tabType = tabTypeQuery as TabType;
     if (tabType === undefined) {
       throw new BadRequestException();
     }
-    const result = this.paymentStatisticsService.getPaymentStatistics(
-      TabType[tabTypeQuery]
-    );
+    const result = this.paymentStatisticsService.getPaymentStatistics(tabType);
     return await result;
   }
 }

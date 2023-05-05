@@ -16,13 +16,13 @@ export class InvoiceClient extends ApiService {
     this.baseUrl = configService.getOrThrow('INVOICE_API');
   }
   async getBillById(id: number) {
-    const response = await this.get(`/api/Bills/${id}/retrieve`);
+    const response = await this.get(`/api/bill/${id}/retrieve`);
     return response.data as BillPaymentDTO;
   }
   async markBillsAs(model: MarkBillsDTO) {
-    await this.put(`/api/Bills/markas`, model);
+    await this.put(`/api/bill/markas`, model);
   }
   async cancelBill(cancelBillDTO: InvoicingCancellBillDTO) {
-    await this.put('/api/Bills/cancel', cancelBillDTO);
+    await this.put('/api/bill/cancel', cancelBillDTO);
   }
 }

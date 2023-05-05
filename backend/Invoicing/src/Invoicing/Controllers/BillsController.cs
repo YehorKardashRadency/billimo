@@ -10,9 +10,12 @@ using Invoicing.Application.Invoicing.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Invoicing.Application.Bills.Commands.MarkBillsAs;
 using Invoicing.Application.Bills.Commands.CancelBill;
+using Invoicing.Application.Bills.Queries.ExportSentBills;
+using Invoicing.Application.Bills.Queries.SentBills;
 
 namespace Invoicing.Controllers
 {
+    [Route("api/bill")]
     public class BillsController : ApiControllerBase
     {
         private readonly IMapper _mapper;
@@ -68,6 +71,23 @@ namespace Invoicing.Controllers
         {
             await Mediator.Send(new CancelBillCommand() { CancelBill = dto});
             return Ok();
+        }
+        [HttpGet("sentbills")]
+        public async Task<IActionResult> SentBills([FromQuery] PaginatedRequestDto request)
+        { 
+            return Ok(await Mediator.Send(_mapper.Map<SentBillsQuery>(request)));
+        }
+
+        [HttpGet("receivedbills")]
+        public async Task<IActionResult> ReceivedBills([FromQuery] PaginatedRequestDto request)
+        {
+            return Ok(await Mediator.Send(_mapper.Map<ReceivedBillsQuery>(request)));
+        }
+
+        [HttpGet("exportbills")]
+        public async Task<IActionResult> ExportBills([FromQuery] RequestDto request)
+        {
+            return Ok(await Mediator.Send(_mapper.Map<ExportSentBillsQuery>(request)));
         }
     }
 }

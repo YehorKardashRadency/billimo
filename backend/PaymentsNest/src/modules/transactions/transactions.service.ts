@@ -71,8 +71,8 @@ export class TransactionsService {
         }
       );
     }
-    if (params.Days) {
-      const startDate = daysAgo(params.Days);
+    if (params.days) {
+      const startDate = daysAgo(params.days);
       const endDate = new Date(Date.now());
       query = query.andWhere(
         'transaction.created_date >= :startDate AND transaction.created_date <= :endDate',
@@ -84,9 +84,9 @@ export class TransactionsService {
     }
     query = query.orderBy(
       'transaction.created_date',
-      params.IsDescending ? 'DESC' : 'ASC'
+      params.isDescending ? 'DESC' : 'ASC'
     );
-    query = query.skip((params.Page - 1) * params.Take).take(params.Take);
+    query = query.skip((params.page - 1) * params.take).take(params.take);
     const transactions = await query.getMany();
 
     const transactions_dto = transactions.map(
@@ -95,7 +95,7 @@ export class TransactionsService {
     const list = new PaginatedList(
       transactions_dto,
       transactions.length,
-      params.Take
+      params.take
     );
     return list;
   }

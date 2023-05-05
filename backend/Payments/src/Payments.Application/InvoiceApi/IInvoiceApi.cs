@@ -7,12 +7,12 @@ namespace Payments.Application.Common.Interfaces;
 
 public interface IInvoiceApi
 {    
-    [Get("/api/Bills/{id}/retrieve")]
+    [Get("/api/bill/{id}/retrieve")]
     Task<BillPaymentDto> GetBillById([Path] long id);
 
-    [Put("/api/Bills/markas")]
+    [Put("/api/bill/markas")]
     Task MarkBillsAs([Body] MarkBillsDto bills);
 
-    [Put("/api/Bills/cancel")]
+    [Put("/api/bill/cancel")]
     Task CancelBill([Body] CancelBillDto billDto);
 }

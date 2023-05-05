@@ -1,5 +1,5 @@
 import { Transform, Type } from 'class-transformer';
-import { IsBoolean, IsInt, IsNumber, IsOptional, Min } from 'class-validator';
+import { IsBoolean, IsInt, IsOptional, Min } from 'class-validator';
 
 export class GetTransactionsQuery {
   SearchString?: string;
@@ -7,21 +7,21 @@ export class GetTransactionsQuery {
   @Type(() => Number)
   @IsInt()
   @Min(0)
-  Page: number;
+  page: number;
 
   @Type(() => Number)
   @IsInt()
   @Min(0)
-  Take: number;
+  take: number;
 
   @Type(() => Number)
   @IsInt()
   @Min(0)
   @IsOptional()
-  Days?: number;
+  days?: number;
 
   @Transform(({ value }) => value === 'true')
   @IsBoolean()
   @IsOptional()
-  IsDescending = true;
+  isDescending = true;
 }

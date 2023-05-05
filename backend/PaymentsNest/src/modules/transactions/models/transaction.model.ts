@@ -15,6 +15,7 @@ export class TransactionModel {
     const isBuyer = user.companyId === transaction.buyerId;
     this.company = isBuyer ? transaction.seller.name : transaction.buyer.name;
     this.amount = isBuyer ? -transaction.amount : transaction.amount;
+    this.status = transaction.status;
     this.date = timeAgo(transaction.created_date);
   }
 }
