@@ -1,4 +1,10 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
 import { Repository } from 'typeorm';
@@ -17,6 +23,13 @@ import { PlaidService } from '../plaid/plaid.service';
 import { PaymentStatistic } from '../payment-statistics/entities/payment-statistic.entity';
 import { TabType } from '../payment-statistics/entities/tab-type.enum';
 import { CreateTransactionResponse } from './models/create-transaction-response.model';
+import { UserPlaidData } from 'src/shared/clients/administration/get-plaid-data.model';
+import { PostponedPaymentInfo } from './entities/postponed-payment-info.entity';
+import { PostponedPayment } from './entities/postponed-payment.entity';
+import { PostponedPaymentType } from './entities/postponed-payment-type.enum';
+import { CancelBillDTO } from './models/cancel-bill.model';
+import { TransactionStatus } from './entities/transaction-status.enum';
+import { InvoicingCancellBillDTO } from 'src/shared/clients/invoice/cancel-bill.model';
 
 @Injectable()
 export class TransactionsService {
@@ -25,6 +38,8 @@ export class TransactionsService {
     private readonly transactionsRepository: Repository<Transaction>,
     @InjectRepository(PaymentStatistic)
     private readonly paymentStatisticRepository: Repository<PaymentStatistic>,
+    @InjectRepository(PostponedPaymentInfo)
+    private readonly postponedPaymentInfoRepository: Repository<PostponedPaymentInfo>,
     @Inject(USER)
     private readonly user: () => CurrentUser,
     private readonly administrationClient: AdministrationClient,
@@ -84,11 +99,18 @@ export class TransactionsService {
     );
     return list;
   }
-  async payNow(payBillDto: PayBillDTO): Promise<CreateTransactionResponse> {
+  async pay(
+    payBillDto: PayBillDTO,
+    postponed = false
+  ): Promise<CreateTransactionResponse> {
     const user = this.user();
 
     const bill = await this.invoiceClient.getBillById(payBillDto.billId);
     const invoice = bill.invoice;
+
+    if (invoice.buyerId != user.companyId) {
+      throw new ForbiddenException();
+    }
 
     const billStatus = BillStatus[bill.status];
     if (billStatus === undefined) {
@@ -96,6 +118,9 @@ export class TransactionsService {
     }
     if (billStatus != BillStatus.Unpaid) {
       throw new BadRequestException('The bill has already been paid');
+    }
+    if (bill.invoice.buyerId != user.companyId) {
+      throw new BadRequestException();
     }
 
     const plaidDataBuyer = await this.administrationClient.getPlaidData(
@@ -113,7 +138,48 @@ export class TransactionsService {
       invoice.total
     );
     await this.transactionsRepository.save(transaction);
-    const plaidTransferOperation: PlaidTransferOperationDto = {
+
+    await this.makePlaidTransaction(
+      transaction,
+      plaidDataBuyer,
+      plaidDataSeller,
+      postponed,
+      payBillDto.payDate
+    );
+
+    if (postponed)
+      await this.updatePaymentStatisticsOnPay(invoice.total, invoice.buyerId);
+    else
+      await this.updatePaymentStatisticsOnPay(
+        invoice.total,
+        invoice.buyerId,
+        invoice.sellerId
+      );
+
+    const response: CreateTransactionResponse = {
+      companyName: plaidDataSeller.companyName,
+      invoiceNumber: invoice.number,
+    };
+    return response;
+  }
+  async cancelScheduledBill(cancellBillDTO: CancelBillDTO) {
+    const user = this.user();
+    const billId = cancellBillDTO.billId;
+    const companyId = user.companyId;
+    const transaction = await this.transactionsRepository.findOne({
+      where: { billId },
+      relations: ['plaidTransfers'],
+    });
+
+    if (transaction.sellerId != companyId && transaction.buyerId != companyId)
+      throw new ForbiddenException();
+    if (transaction.status != TransactionStatus.Pending)
+      throw new ConflictException('The transaction has already been completed');
+    const plaidDataBuyer = await this.administrationClient.getPlaidData(
+      transaction.buyerId
+    );
+
+    const cancelOperation: PlaidTransferOperationDto = {
       amount: transaction.amount,
       clientInformation: plaidDataBuyer,
       description: `${transaction.id}`,
@@ -121,41 +187,98 @@ export class TransactionsService {
       ipAddress: user.ipAddress,
       userAgent: user.userAgent,
     };
-    await this.plaidService.makeDepositTransaction(plaidTransferOperation);
-    plaidTransferOperation.clientInformation = plaidDataSeller;
-    await this.plaidService.makeWithdrawalTransaction(plaidTransferOperation);
-    await this.invoiceClient.markBillsAs({
-      bills: [bill.id],
-      status: BillStatus[BillStatus.Paid],
+    await this.plaidService.makeWithdrawalTransaction(cancelOperation);
+
+    const postponedInfo = await this.postponedPaymentInfoRepository.findOne({
+      where: { transactionId: transaction.id },
     });
-    const paid = invoice.total;
+    await this.postponedPaymentInfoRepository.remove(postponedInfo);
+    transaction.status = TransactionStatus.Cancelled;
+    await this.transactionsRepository.save(transaction);
+
     const receivePaymentStatistic =
       await this.paymentStatisticRepository.findOne({
         where: {
-          companyId: invoice.buyerId,
+          companyId: transaction.buyerId,
+          tabType: TabType.Receive,
+        },
+      });
+    receivePaymentStatistic.paid -= transaction.amount;
+    await this.paymentStatisticRepository.save(receivePaymentStatistic);
+
+    const invoicingCancelBillDTO: InvoicingCancellBillDTO = {
+      ...cancellBillDTO,
+      companyId: companyId,
+    };
+    await this.invoiceClient.cancelBill(invoicingCancelBillDTO);
+  }
+  private async makePlaidTransaction(
+    transaction: Transaction,
+    buyer: UserPlaidData,
+    seller: UserPlaidData,
+    postponed = false,
+    payDate?: Date
+  ) {
+    if (postponed && !payDate) throw new Error('payDate is not set');
+    const user = this.user();
+    const plaidTransferOperation: PlaidTransferOperationDto = {
+      amount: transaction.amount,
+      clientInformation: buyer,
+      description: `${transaction.id}`,
+      transaction: transaction,
+      ipAddress: user.ipAddress,
+      userAgent: user.userAgent,
+    };
+    await this.plaidService.makeDepositTransaction(plaidTransferOperation);
+    if (!postponed) {
+      plaidTransferOperation.clientInformation = seller;
+      await this.plaidService.makeWithdrawalTransaction(plaidTransferOperation);
+    } else {
+      const postponedPaymentInfo = new PostponedPaymentInfo(
+        transaction,
+        seller,
+        user
+      );
+      const postponedPayment = new PostponedPayment(
+        transaction,
+        payDate,
+        PostponedPaymentType.Withdrawal
+      );
+      if (!postponedPaymentInfo.payments) postponedPaymentInfo.payments = [];
+      postponedPaymentInfo.payments.push(postponedPayment);
+      await this.postponedPaymentInfoRepository.save(postponedPaymentInfo);
+    }
+    await this.invoiceClient.markBillsAs({
+      bills: [transaction.billId],
+      status: BillStatus[BillStatus.Paid],
+    });
+  }
+  private async updatePaymentStatisticsOnPay(
+    paid: number,
+    buyerId: number,
+    sellerId?: number
+  ) {
+    const receivePaymentStatistic =
+      await this.paymentStatisticRepository.findOne({
+        where: {
+          companyId: buyerId,
           tabType: TabType.Receive,
         },
       });
     receivePaymentStatistic.forPayment -= paid;
     receivePaymentStatistic.paid += paid;
-
-    const sendPaymentStatistic = await this.paymentStatisticRepository.findOne({
-      where: {
-        companyId: invoice.sellerId,
-        tabType: TabType.Send,
-      },
-    });
-    sendPaymentStatistic.forPayment -= paid;
-    sendPaymentStatistic.paid += paid;
-
-    await this.paymentStatisticRepository.save([
-      receivePaymentStatistic,
-      sendPaymentStatistic,
-    ]);
-    const response: CreateTransactionResponse = {
-      companyName: plaidDataSeller.companyName,
-      invoiceNumber: invoice.number,
-    };
-    return response;
+    await this.paymentStatisticRepository.save(receivePaymentStatistic);
+    if (sellerId) {
+      const sendPaymentStatistic =
+        await this.paymentStatisticRepository.findOne({
+          where: {
+            companyId: sellerId,
+            tabType: TabType.Send,
+          },
+        });
+      sendPaymentStatistic.forPayment -= paid;
+      sendPaymentStatistic.paid += paid;
+      await this.paymentStatisticRepository.save(sendPaymentStatistic);
+    }
   }
 }

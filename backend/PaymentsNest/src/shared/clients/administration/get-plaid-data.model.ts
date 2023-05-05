@@ -1,4 +1,4 @@
-export interface GetPlaidData {
+export interface UserPlaidData {
   companyName: string;
   accountId: string;
   accessToken: string;

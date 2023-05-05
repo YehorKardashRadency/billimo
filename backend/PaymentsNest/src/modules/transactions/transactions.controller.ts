@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { GetTransactionsQuery } from './models/get-transactions.query';
 import { TransactionsService } from './transactions.service';
 import { PayBillDTO } from './models/pay-bill.model';
+import { CancelBillDTO } from './models/cancel-bill.model';
 
 @Controller('Transactions')
 export class TransactionsController {
@@ -14,6 +15,14 @@ export class TransactionsController {
 
   @Post('paynow')
   async payNow(@Body() payBillDTO: PayBillDTO) {
-    return await this.transactionsService.payNow(payBillDTO);
+    return await this.transactionsService.pay(payBillDTO);
+  }
+  @Post('payondate')
+  async payOnDate(@Body() payBillDTO: PayBillDTO) {
+    return await this.transactionsService.pay(payBillDTO, true);
+  }
+  @Post('cancel')
+  async cancelPostponedPayment(@Body() cancelBill: CancelBillDTO) {
+    return await this.transactionsService.cancelScheduledBill(cancelBill);
   }
 }

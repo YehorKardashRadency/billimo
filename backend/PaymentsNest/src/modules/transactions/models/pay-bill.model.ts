@@ -10,8 +10,4 @@ export class PayBillDTO {
   @IsDate()
   @IsOptional()
   payDate?: Date;
-
-  @IsInt()
-  @IsOptional()
-  spreadDays?: number;
 }

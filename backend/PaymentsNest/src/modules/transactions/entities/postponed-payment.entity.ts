@@ -3,6 +3,7 @@ import { PostponedPaymentType } from './postponed-payment-type.enum';
 import { PostponedPaymentInfo } from './postponed-payment-info.entity';
 import { BaseEntity } from 'src/shared/entities/base.entity';
 import { ColumnNumericTransformer } from 'src/shared/numeric-transformer';
+import { Transaction } from './transaction.entity';
 @Entity()
 export class PostponedPayment extends BaseEntity {
   @Column({
@@ -30,4 +31,17 @@ export class PostponedPayment extends BaseEntity {
 
   @Column({ type: 'enum', enum: PostponedPaymentType })
   postponedPaymentType: PostponedPaymentType;
+
+  constructor(
+    transaction: Transaction,
+    payDate: Date,
+    paymentType: PostponedPaymentType
+  ) {
+    super();
+    this.amount = transaction?.amount;
+    this.description = `${transaction?.id}`;
+    this.payDate = payDate;
+    this.paid = false;
+    this.postponedPaymentType = paymentType;
+  }
 }

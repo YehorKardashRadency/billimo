@@ -4,6 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { BillPaymentDTO } from './models/bill-payment.model';
 import { MarkBillsDTO } from './models/mark-bills.model';
+import { InvoicingCancellBillDTO } from './cancel-bill.model';
 
 @Injectable()
 export class InvoiceClient extends ApiService {
@@ -20,5 +21,8 @@ export class InvoiceClient extends ApiService {
   }
   async markBillsAs(model: MarkBillsDTO) {
     await this.put(`/api/Bills/markas`, model);
+  }
+  async cancelBill(cancelBillDTO: InvoicingCancellBillDTO) {
+    await this.put('/api/Bills/cancel', cancelBillDTO);
   }
 }

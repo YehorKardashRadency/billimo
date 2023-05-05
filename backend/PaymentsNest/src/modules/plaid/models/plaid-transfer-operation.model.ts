@@ -1,4 +1,4 @@
-import { GetPlaidData } from 'src/shared/clients/administration/get-plaid-data.model';
+import { UserPlaidData } from 'src/shared/clients/administration/get-plaid-data.model';
 import { Transaction } from '../../transactions/entities/transaction.entity';
 
 export interface PlaidTransferOperationDto {
@@ -7,5 +7,5 @@ export interface PlaidTransferOperationDto {
   ipAddress: string;
   userAgent: string;
   transaction: Transaction;
-  clientInformation: GetPlaidData;
+  clientInformation: UserPlaidData;
 }

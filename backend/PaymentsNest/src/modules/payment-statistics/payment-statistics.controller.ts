@@ -5,7 +5,7 @@ import { TabType } from './entities/tab-type.enum';
 @Controller('BillPayment')
 export class PaymentStatisticsController {
   constructor(
-    private readonly paymentStatisticsService: PaymentStatisticsService,
+    private readonly paymentStatisticsService: PaymentStatisticsService
   ) {}
   @Get('payment-statistic')
   async getPaymentStatistics(@Query('tabType') tabTypeQuery: string) {
@@ -14,7 +14,7 @@ export class PaymentStatisticsController {
       throw new BadRequestException();
     }
     const result = this.paymentStatisticsService.getPaymentStatistics(
-      TabType[tabTypeQuery],
+      TabType[tabTypeQuery]
     );
     return await result;
   }

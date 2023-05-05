@@ -71,11 +71,10 @@
     },
     {
       "DownstreamPathTemplate": "/api/Transactions/cancel",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7239
+          "Host": "{Payments}"
         }
       ],
       "UpstreamPathTemplate": "/gateway/bills/cancel",
@@ -95,7 +94,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/webhooks/{all}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "{Payments}"

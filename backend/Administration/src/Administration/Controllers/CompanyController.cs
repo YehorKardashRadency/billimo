@@ -112,10 +112,10 @@ public class CompanyController : ApiControllerBase
         return result ;
     }
 
-    [HttpGet("{companyId}/get-plaid-data/{paymentMethodId}")]
-    public async Task<IActionResult> GetPlaidData(long companyId, int paymentMethodId)
+    [HttpGet("{companyId}/get-plaid-data")]
+    public async Task<IActionResult> GetPlaidData(long companyId,[FromQuery] GetPlaidBody? plaidBody)
     {
-        return Ok(await Mediator.Send(new GetPlaidData(companyId, paymentMethodId)));
+        return Ok(await Mediator.Send(new GetPlaidData(companyId, plaidBody?.PaymentMethodId)));
     }
     
     [HttpGet("check-on-duplicate-email")]

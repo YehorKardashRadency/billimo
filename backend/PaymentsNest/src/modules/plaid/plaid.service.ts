@@ -57,26 +57,23 @@ export class PlaidService {
         user_agent: model.userAgent,
       },
     };
-    try {
-      const authorizationResponse =
-        await this.plaidApi.transferAuthorizationCreate(transferAuthRequest);
-      const transferAuthorization = authorizationResponse.data;
-      const authorizationId = transferAuthorization.authorization.id;
-      const transferRequest: TransferCreateRequest = {
-        access_token: model.clientInformation.accessToken,
-        account_id: model.clientInformation.accountId,
-        authorization_id: authorizationId,
-        amount: model.amount.toFixed(2),
-        description: model.description,
-      };
-      const transferResponse = await this.plaidApi.transferCreate(
-        transferRequest
-      );
-      const transfer = transferResponse.data.transfer;
-      return transfer;
-    } catch (exception) {
-      console.log(exception);
-    }
+
+    const authorizationResponse =
+      await this.plaidApi.transferAuthorizationCreate(transferAuthRequest);
+    const transferAuthorization = authorizationResponse.data;
+    const authorizationId = transferAuthorization.authorization.id;
+    const transferRequest: TransferCreateRequest = {
+      access_token: model.clientInformation.accessToken,
+      account_id: model.clientInformation.accountId,
+      authorization_id: authorizationId,
+      amount: model.amount.toFixed(2),
+      description: model.description,
+    };
+    const transferResponse = await this.plaidApi.transferCreate(
+      transferRequest
+    );
+    const transfer = transferResponse.data.transfer;
+    return transfer;
   }
   async makeDepositTransaction(model: PlaidTransferOperationDto) {
     const transfer = await this.createTransaction(model, TransferType.Debit);

@@ -12,7 +12,7 @@ export class SeederService {
   ) {}
   async seed() {
     await this.companySeederService.create();
-    await this.transactionSeederService.create();
+    // await this.transactionSeederService.create();
     await this.paymentStatisticSeederService.create();
   }
 }

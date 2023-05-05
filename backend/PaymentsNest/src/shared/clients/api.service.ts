@@ -7,6 +7,7 @@ export class ApiService {
   baseUrl: string;
   constructor(protected readonly http: HttpService) {}
   async get<T>(path: string, params?: any) {
+    console.log(`GET: ${this.baseUrl}${path}`);
     return firstValueFrom(
       this.http.get<T>(`${this.baseUrl}${path}`, { params })
     );

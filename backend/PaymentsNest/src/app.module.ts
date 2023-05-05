@@ -5,7 +5,6 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { UserModule } from './modules/user/user.module';
 import { UserMiddleware } from './modules/user/user.middleware';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,10 +18,11 @@ import { UserProvider } from './modules/user/user.provider';
 import { Company } from './shared/entities/company.entity';
 import { ClientsModule } from './shared/clients/clients.module';
 import { PlaidModule } from './modules/plaid/plaid.module';
+import { PostponedPaymentInfo } from './modules/transactions/entities/postponed-payment-info.entity';
+import { PostponedPayment } from './modules/transactions/entities/postponed-payment.entity';
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -33,7 +33,15 @@ import { PlaidModule } from './modules/plaid/plaid.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Company, Transaction, PaymentStatistic, PlaidTransfer],
+        entitySkipConstructor: true,
+        entities: [
+          Company,
+          Transaction,
+          PaymentStatistic,
+          PlaidTransfer,
+          PostponedPaymentInfo,
+          PostponedPayment,
+        ],
         synchronize: true,
       }),
       inject: [ConfigService],
