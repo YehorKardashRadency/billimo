@@ -71,13 +71,13 @@ public class WebhookCommandHandler : IRequestHandler<WebhookCommand, Result>
 
             };
 
-            var responce = await _plaidClient.TransferEventSyncAsync(request);
-            if (responce == null || responce.TransferEvents.Count == 0)
+            var response = await _plaidClient.TransferEventSyncAsync(request);
+            if (response == null || response.TransferEvents.Count == 0)
             {
                 break;
             }
-            var newEvents = responce.TransferEvents.OrderBy(x => x.EventId);
-            var transferIds = responce.TransferEvents.Select(x => x.TransferId).ToList();
+            var newEvents = response.TransferEvents.OrderBy(x => x.EventId);
+            var transferIds = response.TransferEvents.Select(x => x.TransferId).ToList();
             var transferChangeEvent = await _context.PlaidTransfers.Where(x => transferIds.Contains(x.TransferId)).ToListAsync();
             foreach (var newEvent in newEvents)
             {

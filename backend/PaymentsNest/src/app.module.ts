@@ -20,6 +20,8 @@ import { ClientsModule } from './shared/clients/clients.module';
 import { PlaidModule } from './modules/plaid/plaid.module';
 import { PostponedPaymentInfo } from './modules/transactions/entities/postponed-payment-info.entity';
 import { PostponedPayment } from './modules/transactions/entities/postponed-payment.entity';
+import { WebhooksModule } from './modules/webhooks/webhooks.module';
+import { PlaidTransfersEventSync } from './modules/webhooks/entities/plaid-transfers-event-sync.entity';
 
 @Module({
   imports: [
@@ -41,6 +43,7 @@ import { PostponedPayment } from './modules/transactions/entities/postponed-paym
           PlaidTransfer,
           PostponedPaymentInfo,
           PostponedPayment,
+          PlaidTransfersEventSync,
         ],
         synchronize: true,
       }),
@@ -51,13 +54,14 @@ import { PostponedPayment } from './modules/transactions/entities/postponed-paym
     SeedersModule,
     ClientsModule,
     PlaidModule,
+    WebhooksModule,
   ],
   controllers: [],
   providers: [AppService, UserProvider],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserMiddleware).forRoutes({
+    consumer.apply(UserMiddleware).exclude('webhooks/(.*)').forRoutes({
       path: '*',
       method: RequestMethod.ALL,
     });

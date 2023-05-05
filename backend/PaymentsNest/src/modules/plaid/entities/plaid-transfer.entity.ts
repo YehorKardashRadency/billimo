@@ -13,6 +13,7 @@ export class PlaidTransfer extends BaseEntity {
 
   @ManyToOne(() => Transaction, (transaction) => transaction.plaidTransfers, {
     onDelete: 'CASCADE',
+    cascade: true,
   })
   transaction: Transaction;
 

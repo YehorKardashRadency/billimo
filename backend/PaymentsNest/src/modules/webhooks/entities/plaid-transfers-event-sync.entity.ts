@@ -5,4 +5,9 @@ import { Column, Entity } from 'typeorm';
 export class PlaidTransfersEventSync extends BaseEntity {
   @Column('int')
   lastEventId: number;
+
+  constructor(eventId: number) {
+    super();
+    this.lastEventId = eventId || 0;
+  }
 }

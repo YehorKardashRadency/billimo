@@ -11,6 +11,8 @@ import {
   TransferNetwork,
   ACHClass,
   TransferEventType,
+  TransferEventSyncRequest,
+  TransferEvent,
 } from 'plaid';
 import { PlaidTransferOperationDto } from './models/plaid-transfer-operation.model';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -53,7 +55,6 @@ export class PlaidService {
         legal_name: model.clientInformation.companyName,
       },
       device: {
-        // ip_address: model.ipAddress,
         user_agent: model.userAgent,
       },
     };
@@ -96,5 +97,16 @@ export class PlaidService {
         false
       )
     );
+  }
+  async transferEventSync(
+    afterId: number,
+    count = 25
+  ): Promise<TransferEvent[]> {
+    const request: TransferEventSyncRequest = {
+      after_id: afterId,
+      count: count,
+    };
+    const response = await this.plaidApi.transferEventSync(request);
+    return response.data.transfer_events;
   }
 }
