@@ -24,8 +24,8 @@
       "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
-      "DownstreamPathTemplate": "/api/BillPayment/payment-statistic?tabType={tabType}",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/BillPayment/payment-statistic?{tabType}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "{Payments}"

@@ -21,7 +21,7 @@ class Bill(Model, SurrogatePK):
     bill_cancellation = db.relationship('BillCancellation', uselist=False, back_populates='bill',
                                         foreign_keys=[bill_cancellation_id])
 
-    def __init__(self, invoice_id, payment_method_id=0,
+    def __init__(self, invoice_id, payment_method_id,
                  status=BillStatus.Unpaid,
                  approval_status=ApprovalStatus.NotSet, bill_cancellation_id: int = None):
         self.invoice_id = invoice_id
