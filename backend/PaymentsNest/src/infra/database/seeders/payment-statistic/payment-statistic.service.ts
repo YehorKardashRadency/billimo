@@ -8,7 +8,7 @@ import { PaymentStatistic } from 'src/modules/payment-statistics/entities/paymen
 export class PaymentStatisticSeederService {
   constructor(
     @InjectRepository(PaymentStatistic)
-    private readonly transactionRepository: Repository<PaymentStatistic>,
+    private readonly transactionRepository: Repository<PaymentStatistic>
   ) {}
   async create() {
     const count = await this.transactionRepository.count();
