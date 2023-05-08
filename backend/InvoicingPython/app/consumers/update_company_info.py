@@ -1,7 +1,7 @@
 from app.infra.db import db_session
 from app.api.shared.models import Company
 from app.core.consumer import Consumer
-from app.infra.celery.queues import Queues
+from app.infra.celery.exchanges import Exchanges
 import json
 
 
@@ -24,4 +24,4 @@ def callback(ch, method, properties, body):
     session.close()
 
 
-update_company_info_consumer = Consumer(Queues.UPDATE_COMPANY_INFO_QUEUE, callback)
+update_company_info_consumer = Consumer(Exchanges.UPDATE_COMPANY_INFO_EXCHANGE, callback)

@@ -12,4 +12,4 @@ import * as https from 'https';
   providers: [AdministrationClient, InvoiceClient],
   exports: [AdministrationClient, InvoiceClient],
 })
-export class ClientsModule {}
+export class ApiClientsModule {}

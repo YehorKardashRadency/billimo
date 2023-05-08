@@ -97,6 +97,7 @@ class Accept(Resource):
         uc_request = ChangeApprovalStatusRequest(invoice_id=id, approval_status=ApprovalStatus.Approved)
         uc_response = uc_change_status.execute(uc_request)
         self._presenter.handle(uc_response)
+
         return Response(status=200)
 
 

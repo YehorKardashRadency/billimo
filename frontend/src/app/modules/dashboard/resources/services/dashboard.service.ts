@@ -16,7 +16,7 @@ export class DashboardService extends ApiService {
   }
 
   public getActions$(): Observable<Actions> {
-    return this.get<Actions>('/gateway/QuickActions');
+    return this.get<Actions>('/gateway/quickactions');
   }
 
   public getNotifications$(page: number, take: number, searchString: string, isDescending: boolean, days?: number)

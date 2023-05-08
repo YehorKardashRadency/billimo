@@ -4,8 +4,8 @@ from .base_event import BaseEvent
 from .envelope import MessageEnvelope
 
 
-def publish(queue: str, message_type: list[str], event: BaseEvent):
-    exchange = Exchange(queue, type='direct')
+def publish(exchange: str, message_type: list[str], event: BaseEvent):
+    exchange = Exchange(exchange, type='direct')
     with celery.connection() as connection:
         producer = Producer(connection)
         message = MessageEnvelope(message_type=message_type, message=event).__dict__

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import * as BillReducer from "../resources/state/bill/bill.reducer";
 import {getSelectedBill} from "../resources/state/bill/bill.selectors";
-import {Observable, tap} from 'rxjs';
+import {Observable, lastValueFrom, take, tap} from 'rxjs';
 import {Bill} from '../resources/models/bill.model';
 import {payBillNow, payBillOnDate} from "../resources/state/bill/bill.actions";
 import {PaymentMethodModel} from "../../company-account/components/payment-methods/resources/models/payment-method-model";
@@ -14,6 +14,8 @@ import { selectApprovalSettings } from '../../company-account/components/approva
 import { RequestsBillsActions } from '../resources/state/requests-bills/requests-bills.actions';
 import * as fromApprovalSettingsActions from 'src/app/modules/company-account/components/approval-settings/state/approval-settings.actions';
 import {PayBill} from "../resources/models/PayBill";
+import { selectRole } from 'src/app/store/selectors/auth.selectors';
+import { Role } from '../../auth/resources/models/Role';
 
 
 @Component({
@@ -56,10 +58,10 @@ export class PayBillComponent implements OnInit {
     );
 
     this.approvalSettings$ = this.store.select(selectApprovalSettings).pipe(
-      tap(settings => {
+      tap(async settings => {
         this.payingSettings = settings?.payingInvoicesThreshold as number;
-        console.log(this.billStatus);
-        this.canPay = this.billStatus === 'Approved' || this.payingSettings > this.totalAmount;
+        const role = await lastValueFrom(this.store.pipe(select(selectRole), take(1)));
+        this.canPay = this.billStatus === 'Approved' || this.payingSettings > this.totalAmount || role==Role.Admin || role==Role.Director;
     }));
   }
 

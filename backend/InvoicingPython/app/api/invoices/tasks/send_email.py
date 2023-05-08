@@ -3,7 +3,7 @@ from decimal import Decimal
 import attr
 
 from app.infra.celery import BaseEvent, celery, MessageTypes, publish
-from app.infra.celery.queues import Queues
+from app.infra.celery.exchanges import Exchanges
 
 
 @attr.s(auto_attribs=True)
@@ -18,4 +18,4 @@ class BillEmailEvent(BaseEvent):
 
 @celery.task(name='send_bill_email')
 def send_bill_email(event: BillEmailEvent):
-    publish(Queues.BILL_EMAIL_QUEUE, MessageTypes.BILL_EMAIL, event)
+    publish(Exchanges.BILL_EMAIL_EXCHANGE, MessageTypes.BILL_EMAIL, event)

@@ -9,6 +9,7 @@ from .use_cases.change_status_multiple import ChangeBillStatusMultipleRequest, C
 from .use_cases.get_by_id import GetBillByIdUseCase, GetBillByIdRequest
 from .use_cases.list_bills import ListBillsRequest, ListBillsUseCase, BillType
 from .use_cases.cancel_bill import CancelBillRequest, CancelBillUseCase
+from .models import BillStatus
 from ..shared.presenter import Presenter
 from .models.dto import CancelBillDTO
 from .validators import bill_statuses_schema, bill_id_schema, bill_cancellation_schema
@@ -140,7 +141,7 @@ class MarkBillAs(Resource):
 
         uc_request = ChangeBillStatusMultipleRequest(
             bill_ids=data['bills'],
-            approval_status=ApprovalStatus[data['status']]
+            bill_status=BillStatus[data['status']]
         )
         response = uc_change_status_multiple.execute(uc_request)
         self._presenter.handle(response)

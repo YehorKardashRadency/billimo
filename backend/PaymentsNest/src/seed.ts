@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { SeederService } from './database/seeders/seeder.service';
+import { SeederService } from './infra/database/seeders/seeder.service';
 import { AppModule } from './app.module';
 
 async function bootstrap() {

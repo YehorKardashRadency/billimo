@@ -10,7 +10,7 @@ from app.api.shared.models import Company
 from app.core.consumer import Consumer
 from app.infra.celery import BaseEvent, celery, publish, MessageTypes
 from app.infra.db import db_session
-from app.infra.celery.queues import Queues
+from app.infra.celery.exchanges import Exchanges
 
 
 @attr.s(auto_attribs=True)
@@ -21,7 +21,7 @@ class UpdateBuyerStatisticEvent(BaseEvent):
 
 @celery.task(name='update_buyer_statistic')
 def update_buyer_statistic(event: UpdateBuyerStatisticEvent):
-    publish(Queues.UPDATE_BUYER_STATISTIC_QUEUE, MessageTypes.UPDATE_BUYER_STATISTIC, event)
+    publish(Exchanges.UPDATE_PAYMENT_STATISTIC_EXCHANGE, MessageTypes.UPDATE_BUYER_STATISTIC, event)
 
 
 def callback(ch, method, properties, body):
@@ -58,4 +58,4 @@ def callback(ch, method, properties, body):
     session.close()
 
 
-update_buyer_invoices_consumer = Consumer(Queues.UPDATE_BUYER_INVOICES_QUEUE, callback)
+update_buyer_invoices_consumer = Consumer(Exchanges.UPDATE_BUYER_INVOICES_EXCHANGE, callback)

@@ -52,12 +52,12 @@ public class SendInvoiceCommandHandler : IRequestHandler<SendInvoiceCommand, Res
             BillSecureUrl = Guid.NewGuid(),
             ApprovalStatus = ApprovalStatus.None
         };
-    
+        
         await _context.Bills.AddAsync(bill, cancellationToken);
         invoice.Type = InvoiceType.Archived;
         invoice.ApprovalStatus = ApprovalStatus.Approved;
         await _context.SaveChangesAsync(cancellationToken);
-
+        
         if (invoice.BuyerId == null)
         {
             if (string.IsNullOrEmpty(invoice.BuyerEmail)) 
@@ -89,7 +89,7 @@ public class SendInvoiceCommandHandler : IRequestHandler<SendInvoiceCommand, Res
 
         await _publishEndpoint.Publish(new UpdatePaymentStatisticEvent()
             { SellerId = invoice.SellerId, BuyerId = invoice.BuyerId, ForPayment = invoice.Total }, cancellationToken);
-
+       
         return Result.Success();
     }
 }

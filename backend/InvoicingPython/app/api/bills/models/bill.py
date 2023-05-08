@@ -14,21 +14,16 @@ class Bill(Model, SurrogatePK):
 
     invoice_id = reference_col('invoices')
     invoice = db.relationship('Invoice', foreign_keys=[invoice_id], back_populates='bill')
-    payment_method_id = Column(db.BigInteger, nullable=False)
+    payment_method_id = Column(db.BigInteger, nullable=True)
     status = Column(Enum(BillStatus), nullable=False)
     approval_status = Column(Enum(ApprovalStatus), nullable=False)
-    bill_cancellation_id = reference_col('bill_cancellations', nullable=True)
-    bill_cancellation = db.relationship('BillCancellation', uselist=False, back_populates='bill',
-                                        foreign_keys=[bill_cancellation_id])
+    bill_cancellation = db.relationship('BillCancellation', uselist=False, back_populates='bill')
 
-    def __init__(self, invoice_id, payment_method_id,
-                 status=BillStatus.Unpaid,
-                 approval_status=ApprovalStatus.NotSet, bill_cancellation_id: int = None):
+    def __init__(self, invoice_id, status=BillStatus.Unpaid,
+                 approval_status=ApprovalStatus.NotSet):
         self.invoice_id = invoice_id
-        self.payment_method_id = payment_method_id
         self.status = status
         self.approval_status = approval_status
-        self.bill_cancellation_id = bill_cancellation_id
 
 
 class BillMapper:

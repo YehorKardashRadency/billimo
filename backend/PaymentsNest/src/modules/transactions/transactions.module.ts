@@ -6,7 +6,7 @@ import { PostponedPaymentInfo } from './entities/postponed-payment-info.entity';
 import { Transaction } from './entities/transaction.entity';
 import { TransactionsService } from './transactions.service';
 import { UserProvider } from '../user/user.provider';
-import { ClientsModule } from 'src/shared/clients/clients.module';
+import { ApiClientsModule } from 'src/shared/clients/clients.module';
 import { PlaidModule } from '../plaid/plaid.module';
 import { PaymentStatistic } from '../payment-statistics/entities/payment-statistic.entity';
 
@@ -18,7 +18,7 @@ import { PaymentStatistic } from '../payment-statistics/entities/payment-statist
       Transaction,
       PaymentStatistic,
     ]),
-    ClientsModule,
+    ApiClientsModule,
     PlaidModule,
   ],
   controllers: [TransactionsController],

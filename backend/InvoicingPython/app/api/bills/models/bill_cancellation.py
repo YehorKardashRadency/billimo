@@ -8,7 +8,7 @@ from .dto import CancelBillDTO
 class BillCancellation(Model, SurrogatePK):
     __tablename__ = 'bill_cancellations'
     bill_id = reference_col('bills')
-    bill = db.relationship('Bill', back_populates='bill_cancellation', foreign_keys='Bill.bill_cancellation_id')
+    bill = db.relationship('Bill', back_populates='bill_cancellation')
     company_id = reference_col('companies')
     company = db.relationship('Company', foreign_keys=[company_id], back_populates='bill_cancellations')
     cancellation_time = Column(db.DateTime, nullable=False, default=datetime.utcnow)

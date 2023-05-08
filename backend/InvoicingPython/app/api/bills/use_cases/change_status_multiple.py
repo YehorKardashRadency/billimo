@@ -7,13 +7,14 @@ from app.core.exceptions import BaseForbiddenAccessException, BaseNotFoundExcept
 from app.core.port import UseCaseRequest, UseCaseResponse
 from app.core.use_case import UseCase
 from app.infra.db import db
+from .. import BillStatus
 from ..models import Bill
 
 
 @attr.s(auto_attribs=True)
 class ChangeBillStatusMultipleRequest(UseCaseRequest):
     bill_ids: list[int]
-    approval_status: ApprovalStatus
+    bill_status: BillStatus
 
 
 @attr.s(auto_attribs=True)
@@ -30,6 +31,6 @@ class ChangeBillStatusMultipleUseCase(UseCase):
             if bill is None:
                 response.error = BaseNotFoundException("Bill not found")
                 return response
-            bill.approval_status = uc_request.approval_status
+            bill.status = uc_request.bill_status
         db.session.commit()
         return response
